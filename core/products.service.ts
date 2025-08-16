@@ -2,7 +2,11 @@ import { prisma } from "@/prisma/client";
 
 //get all products
 const getProducts = () => {
-  return prisma.product.findMany({include: {category: true}});
+  const products = prisma.product.findMany({
+    include: {category: true}
+  });
+
+  return products;
 }
 
 const createProduct = (data: {name:string, description?:string, price:number, categoryId:number}) => {
