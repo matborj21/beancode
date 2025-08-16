@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id              Int             @id @default(autoincrement())
+  name            String
+  description     String?
+  price           Float
+  categoryId      Int
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  inventory       Inventory?
+  category        Category        @relation(fields: [categoryId], references: [id])
+  productSupplies ProductSupply[]
+  saleItems       SaleItem[]
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[]
+}
+
+model Inventory {
+  id          Int      @id @default(autoincrement())
+  productId   Int      @unique
+  quantity    Int
+  lastUpdated DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+model Sale {
+  id          Int        @id @default(autoincrement())
+  saleDate    DateTime   @default(now())
+  totalAmount Float
+  saleItems   SaleItem[]
+}
+
+model SaleItem {
+  id        Int     @id @default(autoincrement())
+  saleId    Int
+  productId Int
+  quantity  Int
+  price     Float
+  product   Product @relation(fields: [productId], references: [id])
+  sale      Sale    @relation(fields: [saleId], references: [id])
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  email     String   @unique
+  password  String
+}
+
+model Supply {
+  id              Int             @id @default(autoincrement())
+  name            String
+  quantity        Float
+  unit            String
+  productSupplies ProductSupply[]
+}
+
+model ProductSupply {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  supplyId  Int
+  amount    Float
+  unit      String
+  product   Product @relation(fields: [productId], references: [id])
+  supply    Supply  @relation(fields: [supplyId], references: [id])
+}
