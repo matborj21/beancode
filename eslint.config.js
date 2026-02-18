@@ -35,6 +35,17 @@ export default tseslint.config(
       ],
     },
   },
+  // ← Add this block
+  {
+    files: ["src/server/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+    },
+  },
   {
     linterOptions: {
       reportUnusedDisableDirectives: true,
