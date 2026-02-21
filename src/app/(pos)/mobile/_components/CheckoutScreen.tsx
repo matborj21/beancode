@@ -8,6 +8,7 @@ import { CartItem } from "@/app/components/pos/CartItem";
 import { OrderSummary } from "@/app/components/pos/OrderSummary";
 import { useCart } from "@/context/CartContext";
 import { api } from "@/trpc/react";
+import Link from "next/link";
 
 const PAYMENT_METHODS = ["CASH", "GCASH", "CARD"] as const;
 type PaymentMethod = (typeof PAYMENT_METHODS)[number];
@@ -92,9 +93,9 @@ export function CheckoutScreen() {
       {/* Header */}
       <div className="bg-amber-900 px-4 pb-4 pt-12 text-amber-50">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push("/mobile")}>
+          <Link href="/mobile">
             <ArrowLeft size={22} />
-          </button>
+          </Link>
           <h1 className="text-xl font-bold">Order Checkout</h1>
         </div>
       </div>
