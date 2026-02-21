@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 type ProductCardProps = {
@@ -19,8 +18,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onAdd,
 }) => {
   return (
-    <Button onClick={() => onAdd(id)}>
-      <div className="relative h-40 w-full overflow-hidden rounded-md bg-gray-100">
+    <button
+      onClick={() => onAdd(id)}
+      className="flex w-full flex-col overflow-hidden rounded-2xl bg-secondary shadow-sm transition-transform hover:shadow-md active:scale-95"
+    >
+      <div className="relative h-32 w-full overflow-hidden bg-muted">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -35,10 +37,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
       </div>
-      <div className="p-3 text-left">
+      <div className="w-full p-3 text-left">
         <p className="text-sm font-semibold text-amber-900">{name}</p>
         <p className="text-xs text-amber-600">₱{price.toFixed(2)}</p>
       </div>
-    </Button>
+    </button>
   );
 };

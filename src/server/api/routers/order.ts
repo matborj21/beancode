@@ -1,8 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-
-const VAT_RATE = 0.12;
+import { VAT_RATE } from "@/lib/constants";
 
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString().slice(-6);

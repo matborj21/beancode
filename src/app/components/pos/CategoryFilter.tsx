@@ -19,7 +19,9 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
         <Button
           key={category}
           className={`rounded-full border px-4 py-2 ${
-            selected === category ? "bg-blue-500 text-white" : "bg-gray-200"
+            selected === category
+              ? "bg-primary text-primary-foreground"
+              : "bg-accent text-accent-foreground"
           }`}
           onClick={() => onSelect(category)}
         >

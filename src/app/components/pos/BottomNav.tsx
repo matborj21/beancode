@@ -2,6 +2,7 @@
 
 import { Home, History, ShoppingCart, User } from "lucide-react";
 import { type LucideIcon } from "lucide-react";
+import Link from "next/link";
 
 type NavItem = {
   label: string;
@@ -27,7 +28,7 @@ export function BottomNav({ active }: Props) {
         {NAV_ITEMS.map(({ label, icon: Icon, href }) => {
           const isActive = active === href;
           return (
-            <a
+            <Link
               key={label}
               href={href}
               className={`flex flex-col items-center gap-1 px-3 py-2 ${
@@ -36,7 +37,7 @@ export function BottomNav({ active }: Props) {
             >
               <Icon size={22} />
               <span className="text-xs">{label}</span>
-            </a>
+            </Link>
           );
         })}
       </div>

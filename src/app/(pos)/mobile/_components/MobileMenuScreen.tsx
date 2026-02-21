@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, ShoppingCart } from "lucide-react";
 import { api } from "@/trpc/react";
 
 import { ProductCard } from "@/app/components/pos/ProductCard";
 import { CategoryFilter } from "@/app/components/pos/CategoryFilter";
 import { BottomNav } from "@/app/components/pos/BottomNav";
+import { useCart } from "@/context/CartContext";
 
 export function MobileMenuScreen() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [search, setSearch] = useState("");
+  const { addItem, totalItems } = useCart();
 
   const { data: categories = [] } = api.product.getCategories.useQuery();
   const { data: products = [], isLoading } = api.product.getAll.useQuery({
@@ -18,9 +20,16 @@ export function MobileMenuScreen() {
     search,
   });
 
-  function handleAddToCart(id: string) {
-    // Cart logic coming in Phase 2
-    console.log("Add to cart:", id);
+  function handleAddToCart(productId: string) {
+    const product = products.find((p) => p.id === productId);
+    if (product) {
+      addItem({
+        productId: product.id,
+        name: product.name,
+        price: Number(product.price),
+        imageUrl: product.imageUrl ?? null,
+      });
+    }
   }
 
   return (
@@ -28,8 +37,18 @@ export function MobileMenuScreen() {
       {/* Header */}
       <div className="bg-amber-900 px-4 pb-4 pt-12 text-amber-50">
         <h1 className="mb-4 text-xl font-bold">BeanCode POS ☕</h1>
+        {/* Cart badge */}
+        <div className="relative">
+          {/* Cart badge content */}
+          <ShoppingCart size={24} />
+          {totalItems > 0 && (
+            <span className="absolute -right-2 -top-2 mb-4 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+              {totalItems}
+            </span>
+          )}
+        </div>
         {/* Search */}
-        <div className="flex items-center gap-2 rounded-xl bg-amber-800 px-3 py-2">
+        <div className="mt-2 flex items-center gap-2 rounded-xl bg-amber-800 px-3 py-2">
           <Search size={18} className="text-amber-400" />
           <input
             type="text"
