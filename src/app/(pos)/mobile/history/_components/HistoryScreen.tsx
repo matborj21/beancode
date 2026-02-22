@@ -53,7 +53,7 @@ export function HistoryScreen() {
                     <p className="text-sm font-bold text-amber-900">
                       {tx.orderNumber}
                     </p>
-                    <p className="text-xs text-amber-400">
+                    <p className="text-xs text-amber-600">
                       {new Date(tx.createdAt).toLocaleString("en-PH", {
                         month: "short",
                         day: "numeric",

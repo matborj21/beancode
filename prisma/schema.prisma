@@ -79,6 +79,7 @@ model Product {
   category         Category          @relation(fields: [categoryId], references: [id])
   inventory        Inventory?
   transactionItems TransactionItem[]
+  recipes          Recipe[]
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
 }
@@ -111,6 +112,34 @@ model TransactionItem {
   product       Product     @relation(fields: [productId], references: [id])
   quantity      Int
   price         Decimal     @db.Decimal(10, 2)
+}
+
+enum SupplyUnit {
+  GRAMS
+  ML
+  UNITS
+}
+
+model Supply {
+  id        String      @id @default(cuid())
+  name      String      @unique
+  unit      SupplyUnit
+  stock     Float       @default(0)
+  minStock  Float       @default(0)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  recipes   Recipe[]
+}
+
+model Recipe {
+  id        String  @id @default(cuid())
+  productId String
+  supplyId  String
+  amount    Float
+  product   Product @relation(fields: [productId], references: [id])
+  supply    Supply  @relation(fields: [supplyId], references: [id])
+
+  @@unique([productId, supplyId])
 }
 
 enum PaymentMethod {

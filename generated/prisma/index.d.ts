@@ -58,12 +58,31 @@ export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
  * 
  */
 export type TransactionItem = $Result.DefaultSelection<Prisma.$TransactionItemPayload>
+/**
+ * Model Supply
+ * 
+ */
+export type Supply = $Result.DefaultSelection<Prisma.$SupplyPayload>
+/**
+ * Model Recipe
+ * 
+ */
+export type Recipe = $Result.DefaultSelection<Prisma.$RecipePayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const PaymentMethod: {
+  export const SupplyUnit: {
+  GRAMS: 'GRAMS',
+  ML: 'ML',
+  UNITS: 'UNITS'
+};
+
+export type SupplyUnit = (typeof SupplyUnit)[keyof typeof SupplyUnit]
+
+
+export const PaymentMethod: {
   CASH: 'CASH',
   GCASH: 'GCASH',
   CARD: 'CARD'
@@ -91,6 +110,10 @@ export const Role: {
 export type Role = (typeof Role)[keyof typeof Role]
 
 }
+
+export type SupplyUnit = $Enums.SupplyUnit
+
+export const SupplyUnit: typeof $Enums.SupplyUnit
 
 export type PaymentMethod = $Enums.PaymentMethod
 
@@ -311,6 +334,26 @@ export class PrismaClient<
     * ```
     */
   get transactionItem(): Prisma.TransactionItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.supply`: Exposes CRUD operations for the **Supply** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Supplies
+    * const supplies = await prisma.supply.findMany()
+    * ```
+    */
+  get supply(): Prisma.SupplyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.recipe`: Exposes CRUD operations for the **Recipe** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Recipes
+    * const recipes = await prisma.recipe.findMany()
+    * ```
+    */
+  get recipe(): Prisma.RecipeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -760,7 +803,9 @@ export namespace Prisma {
     Product: 'Product',
     Inventory: 'Inventory',
     Transaction: 'Transaction',
-    TransactionItem: 'TransactionItem'
+    TransactionItem: 'TransactionItem',
+    Supply: 'Supply',
+    Recipe: 'Recipe'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -779,7 +824,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "category" | "product" | "inventory" | "transaction" | "transactionItem"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "category" | "product" | "inventory" | "transaction" | "transactionItem" | "supply" | "recipe"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1449,6 +1494,154 @@ export namespace Prisma {
           }
         }
       }
+      Supply: {
+        payload: Prisma.$SupplyPayload<ExtArgs>
+        fields: Prisma.SupplyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SupplyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SupplyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>
+          }
+          findFirst: {
+            args: Prisma.SupplyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SupplyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>
+          }
+          findMany: {
+            args: Prisma.SupplyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>[]
+          }
+          create: {
+            args: Prisma.SupplyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>
+          }
+          createMany: {
+            args: Prisma.SupplyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SupplyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>[]
+          }
+          delete: {
+            args: Prisma.SupplyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>
+          }
+          update: {
+            args: Prisma.SupplyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>
+          }
+          deleteMany: {
+            args: Prisma.SupplyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SupplyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SupplyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>[]
+          }
+          upsert: {
+            args: Prisma.SupplyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupplyPayload>
+          }
+          aggregate: {
+            args: Prisma.SupplyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSupply>
+          }
+          groupBy: {
+            args: Prisma.SupplyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SupplyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SupplyCountArgs<ExtArgs>
+            result: $Utils.Optional<SupplyCountAggregateOutputType> | number
+          }
+        }
+      }
+      Recipe: {
+        payload: Prisma.$RecipePayload<ExtArgs>
+        fields: Prisma.RecipeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RecipeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RecipeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>
+          }
+          findFirst: {
+            args: Prisma.RecipeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RecipeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>
+          }
+          findMany: {
+            args: Prisma.RecipeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>[]
+          }
+          create: {
+            args: Prisma.RecipeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>
+          }
+          createMany: {
+            args: Prisma.RecipeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RecipeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>[]
+          }
+          delete: {
+            args: Prisma.RecipeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>
+          }
+          update: {
+            args: Prisma.RecipeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>
+          }
+          deleteMany: {
+            args: Prisma.RecipeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RecipeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RecipeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>[]
+          }
+          upsert: {
+            args: Prisma.RecipeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipePayload>
+          }
+          aggregate: {
+            args: Prisma.RecipeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRecipe>
+          }
+          groupBy: {
+            args: Prisma.RecipeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RecipeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RecipeCountArgs<ExtArgs>
+            result: $Utils.Optional<RecipeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1554,6 +1747,8 @@ export namespace Prisma {
     inventory?: InventoryOmit
     transaction?: TransactionOmit
     transactionItem?: TransactionItemOmit
+    supply?: SupplyOmit
+    recipe?: RecipeOmit
   }
 
   /* Types for Logging */
@@ -1706,10 +1901,12 @@ export namespace Prisma {
 
   export type ProductCountOutputType = {
     transactionItems: number
+    recipes: number
   }
 
   export type ProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     transactionItems?: boolean | ProductCountOutputTypeCountTransactionItemsArgs
+    recipes?: boolean | ProductCountOutputTypeCountRecipesArgs
   }
 
   // Custom InputTypes
@@ -1728,6 +1925,13 @@ export namespace Prisma {
    */
   export type ProductCountOutputTypeCountTransactionItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionItemWhereInput
+  }
+
+  /**
+   * ProductCountOutputType without action
+   */
+  export type ProductCountOutputTypeCountRecipesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecipeWhereInput
   }
 
 
@@ -1759,6 +1963,37 @@ export namespace Prisma {
    */
   export type TransactionCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionItemWhereInput
+  }
+
+
+  /**
+   * Count Type SupplyCountOutputType
+   */
+
+  export type SupplyCountOutputType = {
+    recipes: number
+  }
+
+  export type SupplyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipes?: boolean | SupplyCountOutputTypeCountRecipesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SupplyCountOutputType without action
+   */
+  export type SupplyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupplyCountOutputType
+     */
+    select?: SupplyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SupplyCountOutputType without action
+   */
+  export type SupplyCountOutputTypeCountRecipesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecipeWhereInput
   }
 
 
@@ -7386,6 +7621,7 @@ export namespace Prisma {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     inventory?: boolean | Product$inventoryArgs<ExtArgs>
     transactionItems?: boolean | Product$transactionItemsArgs<ExtArgs>
+    recipes?: boolean | Product$recipesArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
@@ -7429,6 +7665,7 @@ export namespace Prisma {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     inventory?: boolean | Product$inventoryArgs<ExtArgs>
     transactionItems?: boolean | Product$transactionItemsArgs<ExtArgs>
+    recipes?: boolean | Product$recipesArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7444,6 +7681,7 @@ export namespace Prisma {
       category: Prisma.$CategoryPayload<ExtArgs>
       inventory: Prisma.$InventoryPayload<ExtArgs> | null
       transactionItems: Prisma.$TransactionItemPayload<ExtArgs>[]
+      recipes: Prisma.$RecipePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7851,6 +8089,7 @@ export namespace Prisma {
     category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     inventory<T extends Product$inventoryArgs<ExtArgs> = {}>(args?: Subset<T, Product$inventoryArgs<ExtArgs>>): Prisma__InventoryClient<$Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     transactionItems<T extends Product$transactionItemsArgs<ExtArgs> = {}>(args?: Subset<T, Product$transactionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recipes<T extends Product$recipesArgs<ExtArgs> = {}>(args?: Subset<T, Product$recipesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8324,6 +8563,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TransactionItemScalarFieldEnum | TransactionItemScalarFieldEnum[]
+  }
+
+  /**
+   * Product.recipes
+   */
+  export type Product$recipesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    where?: RecipeWhereInput
+    orderBy?: RecipeOrderByWithRelationInput | RecipeOrderByWithRelationInput[]
+    cursor?: RecipeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
   }
 
   /**
@@ -11680,6 +11943,2227 @@ export namespace Prisma {
 
 
   /**
+   * Model Supply
+   */
+
+  export type AggregateSupply = {
+    _count: SupplyCountAggregateOutputType | null
+    _avg: SupplyAvgAggregateOutputType | null
+    _sum: SupplySumAggregateOutputType | null
+    _min: SupplyMinAggregateOutputType | null
+    _max: SupplyMaxAggregateOutputType | null
+  }
+
+  export type SupplyAvgAggregateOutputType = {
+    stock: number | null
+    minStock: number | null
+  }
+
+  export type SupplySumAggregateOutputType = {
+    stock: number | null
+    minStock: number | null
+  }
+
+  export type SupplyMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    unit: $Enums.SupplyUnit | null
+    stock: number | null
+    minStock: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupplyMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    unit: $Enums.SupplyUnit | null
+    stock: number | null
+    minStock: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupplyCountAggregateOutputType = {
+    id: number
+    name: number
+    unit: number
+    stock: number
+    minStock: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SupplyAvgAggregateInputType = {
+    stock?: true
+    minStock?: true
+  }
+
+  export type SupplySumAggregateInputType = {
+    stock?: true
+    minStock?: true
+  }
+
+  export type SupplyMinAggregateInputType = {
+    id?: true
+    name?: true
+    unit?: true
+    stock?: true
+    minStock?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupplyMaxAggregateInputType = {
+    id?: true
+    name?: true
+    unit?: true
+    stock?: true
+    minStock?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupplyCountAggregateInputType = {
+    id?: true
+    name?: true
+    unit?: true
+    stock?: true
+    minStock?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SupplyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Supply to aggregate.
+     */
+    where?: SupplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Supplies to fetch.
+     */
+    orderBy?: SupplyOrderByWithRelationInput | SupplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SupplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Supplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Supplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Supplies
+    **/
+    _count?: true | SupplyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SupplyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SupplySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SupplyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SupplyMaxAggregateInputType
+  }
+
+  export type GetSupplyAggregateType<T extends SupplyAggregateArgs> = {
+        [P in keyof T & keyof AggregateSupply]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSupply[P]>
+      : GetScalarType<T[P], AggregateSupply[P]>
+  }
+
+
+
+
+  export type SupplyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupplyWhereInput
+    orderBy?: SupplyOrderByWithAggregationInput | SupplyOrderByWithAggregationInput[]
+    by: SupplyScalarFieldEnum[] | SupplyScalarFieldEnum
+    having?: SupplyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SupplyCountAggregateInputType | true
+    _avg?: SupplyAvgAggregateInputType
+    _sum?: SupplySumAggregateInputType
+    _min?: SupplyMinAggregateInputType
+    _max?: SupplyMaxAggregateInputType
+  }
+
+  export type SupplyGroupByOutputType = {
+    id: string
+    name: string
+    unit: $Enums.SupplyUnit
+    stock: number
+    minStock: number
+    createdAt: Date
+    updatedAt: Date
+    _count: SupplyCountAggregateOutputType | null
+    _avg: SupplyAvgAggregateOutputType | null
+    _sum: SupplySumAggregateOutputType | null
+    _min: SupplyMinAggregateOutputType | null
+    _max: SupplyMaxAggregateOutputType | null
+  }
+
+  type GetSupplyGroupByPayload<T extends SupplyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SupplyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SupplyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SupplyGroupByOutputType[P]>
+            : GetScalarType<T[P], SupplyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SupplySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    unit?: boolean
+    stock?: boolean
+    minStock?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    recipes?: boolean | Supply$recipesArgs<ExtArgs>
+    _count?: boolean | SupplyCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["supply"]>
+
+  export type SupplySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    unit?: boolean
+    stock?: boolean
+    minStock?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["supply"]>
+
+  export type SupplySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    unit?: boolean
+    stock?: boolean
+    minStock?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["supply"]>
+
+  export type SupplySelectScalar = {
+    id?: boolean
+    name?: boolean
+    unit?: boolean
+    stock?: boolean
+    minStock?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SupplyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "unit" | "stock" | "minStock" | "createdAt" | "updatedAt", ExtArgs["result"]["supply"]>
+  export type SupplyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipes?: boolean | Supply$recipesArgs<ExtArgs>
+    _count?: boolean | SupplyCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SupplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SupplyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SupplyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Supply"
+    objects: {
+      recipes: Prisma.$RecipePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      unit: $Enums.SupplyUnit
+      stock: number
+      minStock: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["supply"]>
+    composites: {}
+  }
+
+  type SupplyGetPayload<S extends boolean | null | undefined | SupplyDefaultArgs> = $Result.GetResult<Prisma.$SupplyPayload, S>
+
+  type SupplyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SupplyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SupplyCountAggregateInputType | true
+    }
+
+  export interface SupplyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Supply'], meta: { name: 'Supply' } }
+    /**
+     * Find zero or one Supply that matches the filter.
+     * @param {SupplyFindUniqueArgs} args - Arguments to find a Supply
+     * @example
+     * // Get one Supply
+     * const supply = await prisma.supply.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SupplyFindUniqueArgs>(args: SelectSubset<T, SupplyFindUniqueArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Supply that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SupplyFindUniqueOrThrowArgs} args - Arguments to find a Supply
+     * @example
+     * // Get one Supply
+     * const supply = await prisma.supply.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SupplyFindUniqueOrThrowArgs>(args: SelectSubset<T, SupplyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Supply that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupplyFindFirstArgs} args - Arguments to find a Supply
+     * @example
+     * // Get one Supply
+     * const supply = await prisma.supply.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SupplyFindFirstArgs>(args?: SelectSubset<T, SupplyFindFirstArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Supply that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupplyFindFirstOrThrowArgs} args - Arguments to find a Supply
+     * @example
+     * // Get one Supply
+     * const supply = await prisma.supply.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SupplyFindFirstOrThrowArgs>(args?: SelectSubset<T, SupplyFindFirstOrThrowArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Supplies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupplyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Supplies
+     * const supplies = await prisma.supply.findMany()
+     * 
+     * // Get first 10 Supplies
+     * const supplies = await prisma.supply.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const supplyWithIdOnly = await prisma.supply.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SupplyFindManyArgs>(args?: SelectSubset<T, SupplyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Supply.
+     * @param {SupplyCreateArgs} args - Arguments to create a Supply.
+     * @example
+     * // Create one Supply
+     * const Supply = await prisma.supply.create({
+     *   data: {
+     *     // ... data to create a Supply
+     *   }
+     * })
+     * 
+     */
+    create<T extends SupplyCreateArgs>(args: SelectSubset<T, SupplyCreateArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Supplies.
+     * @param {SupplyCreateManyArgs} args - Arguments to create many Supplies.
+     * @example
+     * // Create many Supplies
+     * const supply = await prisma.supply.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SupplyCreateManyArgs>(args?: SelectSubset<T, SupplyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Supplies and returns the data saved in the database.
+     * @param {SupplyCreateManyAndReturnArgs} args - Arguments to create many Supplies.
+     * @example
+     * // Create many Supplies
+     * const supply = await prisma.supply.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Supplies and only return the `id`
+     * const supplyWithIdOnly = await prisma.supply.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SupplyCreateManyAndReturnArgs>(args?: SelectSubset<T, SupplyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Supply.
+     * @param {SupplyDeleteArgs} args - Arguments to delete one Supply.
+     * @example
+     * // Delete one Supply
+     * const Supply = await prisma.supply.delete({
+     *   where: {
+     *     // ... filter to delete one Supply
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SupplyDeleteArgs>(args: SelectSubset<T, SupplyDeleteArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Supply.
+     * @param {SupplyUpdateArgs} args - Arguments to update one Supply.
+     * @example
+     * // Update one Supply
+     * const supply = await prisma.supply.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SupplyUpdateArgs>(args: SelectSubset<T, SupplyUpdateArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Supplies.
+     * @param {SupplyDeleteManyArgs} args - Arguments to filter Supplies to delete.
+     * @example
+     * // Delete a few Supplies
+     * const { count } = await prisma.supply.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SupplyDeleteManyArgs>(args?: SelectSubset<T, SupplyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Supplies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupplyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Supplies
+     * const supply = await prisma.supply.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SupplyUpdateManyArgs>(args: SelectSubset<T, SupplyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Supplies and returns the data updated in the database.
+     * @param {SupplyUpdateManyAndReturnArgs} args - Arguments to update many Supplies.
+     * @example
+     * // Update many Supplies
+     * const supply = await prisma.supply.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Supplies and only return the `id`
+     * const supplyWithIdOnly = await prisma.supply.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SupplyUpdateManyAndReturnArgs>(args: SelectSubset<T, SupplyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Supply.
+     * @param {SupplyUpsertArgs} args - Arguments to update or create a Supply.
+     * @example
+     * // Update or create a Supply
+     * const supply = await prisma.supply.upsert({
+     *   create: {
+     *     // ... data to create a Supply
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Supply we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SupplyUpsertArgs>(args: SelectSubset<T, SupplyUpsertArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Supplies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupplyCountArgs} args - Arguments to filter Supplies to count.
+     * @example
+     * // Count the number of Supplies
+     * const count = await prisma.supply.count({
+     *   where: {
+     *     // ... the filter for the Supplies we want to count
+     *   }
+     * })
+    **/
+    count<T extends SupplyCountArgs>(
+      args?: Subset<T, SupplyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SupplyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Supply.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupplyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SupplyAggregateArgs>(args: Subset<T, SupplyAggregateArgs>): Prisma.PrismaPromise<GetSupplyAggregateType<T>>
+
+    /**
+     * Group by Supply.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupplyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SupplyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SupplyGroupByArgs['orderBy'] }
+        : { orderBy?: SupplyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SupplyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSupplyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Supply model
+   */
+  readonly fields: SupplyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Supply.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SupplyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    recipes<T extends Supply$recipesArgs<ExtArgs> = {}>(args?: Subset<T, Supply$recipesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Supply model
+   */
+  interface SupplyFieldRefs {
+    readonly id: FieldRef<"Supply", 'String'>
+    readonly name: FieldRef<"Supply", 'String'>
+    readonly unit: FieldRef<"Supply", 'SupplyUnit'>
+    readonly stock: FieldRef<"Supply", 'Float'>
+    readonly minStock: FieldRef<"Supply", 'Float'>
+    readonly createdAt: FieldRef<"Supply", 'DateTime'>
+    readonly updatedAt: FieldRef<"Supply", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Supply findUnique
+   */
+  export type SupplyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * Filter, which Supply to fetch.
+     */
+    where: SupplyWhereUniqueInput
+  }
+
+  /**
+   * Supply findUniqueOrThrow
+   */
+  export type SupplyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * Filter, which Supply to fetch.
+     */
+    where: SupplyWhereUniqueInput
+  }
+
+  /**
+   * Supply findFirst
+   */
+  export type SupplyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * Filter, which Supply to fetch.
+     */
+    where?: SupplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Supplies to fetch.
+     */
+    orderBy?: SupplyOrderByWithRelationInput | SupplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Supplies.
+     */
+    cursor?: SupplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Supplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Supplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Supplies.
+     */
+    distinct?: SupplyScalarFieldEnum | SupplyScalarFieldEnum[]
+  }
+
+  /**
+   * Supply findFirstOrThrow
+   */
+  export type SupplyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * Filter, which Supply to fetch.
+     */
+    where?: SupplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Supplies to fetch.
+     */
+    orderBy?: SupplyOrderByWithRelationInput | SupplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Supplies.
+     */
+    cursor?: SupplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Supplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Supplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Supplies.
+     */
+    distinct?: SupplyScalarFieldEnum | SupplyScalarFieldEnum[]
+  }
+
+  /**
+   * Supply findMany
+   */
+  export type SupplyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * Filter, which Supplies to fetch.
+     */
+    where?: SupplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Supplies to fetch.
+     */
+    orderBy?: SupplyOrderByWithRelationInput | SupplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Supplies.
+     */
+    cursor?: SupplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Supplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Supplies.
+     */
+    skip?: number
+    distinct?: SupplyScalarFieldEnum | SupplyScalarFieldEnum[]
+  }
+
+  /**
+   * Supply create
+   */
+  export type SupplyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Supply.
+     */
+    data: XOR<SupplyCreateInput, SupplyUncheckedCreateInput>
+  }
+
+  /**
+   * Supply createMany
+   */
+  export type SupplyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Supplies.
+     */
+    data: SupplyCreateManyInput | SupplyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Supply createManyAndReturn
+   */
+  export type SupplyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * The data used to create many Supplies.
+     */
+    data: SupplyCreateManyInput | SupplyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Supply update
+   */
+  export type SupplyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Supply.
+     */
+    data: XOR<SupplyUpdateInput, SupplyUncheckedUpdateInput>
+    /**
+     * Choose, which Supply to update.
+     */
+    where: SupplyWhereUniqueInput
+  }
+
+  /**
+   * Supply updateMany
+   */
+  export type SupplyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Supplies.
+     */
+    data: XOR<SupplyUpdateManyMutationInput, SupplyUncheckedUpdateManyInput>
+    /**
+     * Filter which Supplies to update
+     */
+    where?: SupplyWhereInput
+    /**
+     * Limit how many Supplies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Supply updateManyAndReturn
+   */
+  export type SupplyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * The data used to update Supplies.
+     */
+    data: XOR<SupplyUpdateManyMutationInput, SupplyUncheckedUpdateManyInput>
+    /**
+     * Filter which Supplies to update
+     */
+    where?: SupplyWhereInput
+    /**
+     * Limit how many Supplies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Supply upsert
+   */
+  export type SupplyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Supply to update in case it exists.
+     */
+    where: SupplyWhereUniqueInput
+    /**
+     * In case the Supply found by the `where` argument doesn't exist, create a new Supply with this data.
+     */
+    create: XOR<SupplyCreateInput, SupplyUncheckedCreateInput>
+    /**
+     * In case the Supply was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SupplyUpdateInput, SupplyUncheckedUpdateInput>
+  }
+
+  /**
+   * Supply delete
+   */
+  export type SupplyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+    /**
+     * Filter which Supply to delete.
+     */
+    where: SupplyWhereUniqueInput
+  }
+
+  /**
+   * Supply deleteMany
+   */
+  export type SupplyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Supplies to delete
+     */
+    where?: SupplyWhereInput
+    /**
+     * Limit how many Supplies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Supply.recipes
+   */
+  export type Supply$recipesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    where?: RecipeWhereInput
+    orderBy?: RecipeOrderByWithRelationInput | RecipeOrderByWithRelationInput[]
+    cursor?: RecipeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
+  }
+
+  /**
+   * Supply without action
+   */
+  export type SupplyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Supply
+     */
+    select?: SupplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Supply
+     */
+    omit?: SupplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupplyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Recipe
+   */
+
+  export type AggregateRecipe = {
+    _count: RecipeCountAggregateOutputType | null
+    _avg: RecipeAvgAggregateOutputType | null
+    _sum: RecipeSumAggregateOutputType | null
+    _min: RecipeMinAggregateOutputType | null
+    _max: RecipeMaxAggregateOutputType | null
+  }
+
+  export type RecipeAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type RecipeSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type RecipeMinAggregateOutputType = {
+    id: string | null
+    productId: string | null
+    supplyId: string | null
+    amount: number | null
+  }
+
+  export type RecipeMaxAggregateOutputType = {
+    id: string | null
+    productId: string | null
+    supplyId: string | null
+    amount: number | null
+  }
+
+  export type RecipeCountAggregateOutputType = {
+    id: number
+    productId: number
+    supplyId: number
+    amount: number
+    _all: number
+  }
+
+
+  export type RecipeAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type RecipeSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type RecipeMinAggregateInputType = {
+    id?: true
+    productId?: true
+    supplyId?: true
+    amount?: true
+  }
+
+  export type RecipeMaxAggregateInputType = {
+    id?: true
+    productId?: true
+    supplyId?: true
+    amount?: true
+  }
+
+  export type RecipeCountAggregateInputType = {
+    id?: true
+    productId?: true
+    supplyId?: true
+    amount?: true
+    _all?: true
+  }
+
+  export type RecipeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Recipe to aggregate.
+     */
+    where?: RecipeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Recipes to fetch.
+     */
+    orderBy?: RecipeOrderByWithRelationInput | RecipeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RecipeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Recipes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Recipes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Recipes
+    **/
+    _count?: true | RecipeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RecipeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RecipeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RecipeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RecipeMaxAggregateInputType
+  }
+
+  export type GetRecipeAggregateType<T extends RecipeAggregateArgs> = {
+        [P in keyof T & keyof AggregateRecipe]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRecipe[P]>
+      : GetScalarType<T[P], AggregateRecipe[P]>
+  }
+
+
+
+
+  export type RecipeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecipeWhereInput
+    orderBy?: RecipeOrderByWithAggregationInput | RecipeOrderByWithAggregationInput[]
+    by: RecipeScalarFieldEnum[] | RecipeScalarFieldEnum
+    having?: RecipeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RecipeCountAggregateInputType | true
+    _avg?: RecipeAvgAggregateInputType
+    _sum?: RecipeSumAggregateInputType
+    _min?: RecipeMinAggregateInputType
+    _max?: RecipeMaxAggregateInputType
+  }
+
+  export type RecipeGroupByOutputType = {
+    id: string
+    productId: string
+    supplyId: string
+    amount: number
+    _count: RecipeCountAggregateOutputType | null
+    _avg: RecipeAvgAggregateOutputType | null
+    _sum: RecipeSumAggregateOutputType | null
+    _min: RecipeMinAggregateOutputType | null
+    _max: RecipeMaxAggregateOutputType | null
+  }
+
+  type GetRecipeGroupByPayload<T extends RecipeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RecipeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RecipeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RecipeGroupByOutputType[P]>
+            : GetScalarType<T[P], RecipeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RecipeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    supplyId?: boolean
+    amount?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    supply?: boolean | SupplyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recipe"]>
+
+  export type RecipeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    supplyId?: boolean
+    amount?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    supply?: boolean | SupplyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recipe"]>
+
+  export type RecipeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    supplyId?: boolean
+    amount?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    supply?: boolean | SupplyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recipe"]>
+
+  export type RecipeSelectScalar = {
+    id?: boolean
+    productId?: boolean
+    supplyId?: boolean
+    amount?: boolean
+  }
+
+  export type RecipeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "supplyId" | "amount", ExtArgs["result"]["recipe"]>
+  export type RecipeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    supply?: boolean | SupplyDefaultArgs<ExtArgs>
+  }
+  export type RecipeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    supply?: boolean | SupplyDefaultArgs<ExtArgs>
+  }
+  export type RecipeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    supply?: boolean | SupplyDefaultArgs<ExtArgs>
+  }
+
+  export type $RecipePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Recipe"
+    objects: {
+      product: Prisma.$ProductPayload<ExtArgs>
+      supply: Prisma.$SupplyPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      productId: string
+      supplyId: string
+      amount: number
+    }, ExtArgs["result"]["recipe"]>
+    composites: {}
+  }
+
+  type RecipeGetPayload<S extends boolean | null | undefined | RecipeDefaultArgs> = $Result.GetResult<Prisma.$RecipePayload, S>
+
+  type RecipeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RecipeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RecipeCountAggregateInputType | true
+    }
+
+  export interface RecipeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Recipe'], meta: { name: 'Recipe' } }
+    /**
+     * Find zero or one Recipe that matches the filter.
+     * @param {RecipeFindUniqueArgs} args - Arguments to find a Recipe
+     * @example
+     * // Get one Recipe
+     * const recipe = await prisma.recipe.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RecipeFindUniqueArgs>(args: SelectSubset<T, RecipeFindUniqueArgs<ExtArgs>>): Prisma__RecipeClient<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Recipe that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RecipeFindUniqueOrThrowArgs} args - Arguments to find a Recipe
+     * @example
+     * // Get one Recipe
+     * const recipe = await prisma.recipe.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RecipeFindUniqueOrThrowArgs>(args: SelectSubset<T, RecipeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RecipeClient<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Recipe that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecipeFindFirstArgs} args - Arguments to find a Recipe
+     * @example
+     * // Get one Recipe
+     * const recipe = await prisma.recipe.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RecipeFindFirstArgs>(args?: SelectSubset<T, RecipeFindFirstArgs<ExtArgs>>): Prisma__RecipeClient<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Recipe that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecipeFindFirstOrThrowArgs} args - Arguments to find a Recipe
+     * @example
+     * // Get one Recipe
+     * const recipe = await prisma.recipe.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RecipeFindFirstOrThrowArgs>(args?: SelectSubset<T, RecipeFindFirstOrThrowArgs<ExtArgs>>): Prisma__RecipeClient<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Recipes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecipeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Recipes
+     * const recipes = await prisma.recipe.findMany()
+     * 
+     * // Get first 10 Recipes
+     * const recipes = await prisma.recipe.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const recipeWithIdOnly = await prisma.recipe.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RecipeFindManyArgs>(args?: SelectSubset<T, RecipeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Recipe.
+     * @param {RecipeCreateArgs} args - Arguments to create a Recipe.
+     * @example
+     * // Create one Recipe
+     * const Recipe = await prisma.recipe.create({
+     *   data: {
+     *     // ... data to create a Recipe
+     *   }
+     * })
+     * 
+     */
+    create<T extends RecipeCreateArgs>(args: SelectSubset<T, RecipeCreateArgs<ExtArgs>>): Prisma__RecipeClient<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Recipes.
+     * @param {RecipeCreateManyArgs} args - Arguments to create many Recipes.
+     * @example
+     * // Create many Recipes
+     * const recipe = await prisma.recipe.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RecipeCreateManyArgs>(args?: SelectSubset<T, RecipeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Recipes and returns the data saved in the database.
+     * @param {RecipeCreateManyAndReturnArgs} args - Arguments to create many Recipes.
+     * @example
+     * // Create many Recipes
+     * const recipe = await prisma.recipe.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Recipes and only return the `id`
+     * const recipeWithIdOnly = await prisma.recipe.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RecipeCreateManyAndReturnArgs>(args?: SelectSubset<T, RecipeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Recipe.
+     * @param {RecipeDeleteArgs} args - Arguments to delete one Recipe.
+     * @example
+     * // Delete one Recipe
+     * const Recipe = await prisma.recipe.delete({
+     *   where: {
+     *     // ... filter to delete one Recipe
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RecipeDeleteArgs>(args: SelectSubset<T, RecipeDeleteArgs<ExtArgs>>): Prisma__RecipeClient<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Recipe.
+     * @param {RecipeUpdateArgs} args - Arguments to update one Recipe.
+     * @example
+     * // Update one Recipe
+     * const recipe = await prisma.recipe.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RecipeUpdateArgs>(args: SelectSubset<T, RecipeUpdateArgs<ExtArgs>>): Prisma__RecipeClient<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Recipes.
+     * @param {RecipeDeleteManyArgs} args - Arguments to filter Recipes to delete.
+     * @example
+     * // Delete a few Recipes
+     * const { count } = await prisma.recipe.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RecipeDeleteManyArgs>(args?: SelectSubset<T, RecipeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Recipes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecipeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Recipes
+     * const recipe = await prisma.recipe.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RecipeUpdateManyArgs>(args: SelectSubset<T, RecipeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Recipes and returns the data updated in the database.
+     * @param {RecipeUpdateManyAndReturnArgs} args - Arguments to update many Recipes.
+     * @example
+     * // Update many Recipes
+     * const recipe = await prisma.recipe.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Recipes and only return the `id`
+     * const recipeWithIdOnly = await prisma.recipe.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RecipeUpdateManyAndReturnArgs>(args: SelectSubset<T, RecipeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Recipe.
+     * @param {RecipeUpsertArgs} args - Arguments to update or create a Recipe.
+     * @example
+     * // Update or create a Recipe
+     * const recipe = await prisma.recipe.upsert({
+     *   create: {
+     *     // ... data to create a Recipe
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Recipe we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RecipeUpsertArgs>(args: SelectSubset<T, RecipeUpsertArgs<ExtArgs>>): Prisma__RecipeClient<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Recipes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecipeCountArgs} args - Arguments to filter Recipes to count.
+     * @example
+     * // Count the number of Recipes
+     * const count = await prisma.recipe.count({
+     *   where: {
+     *     // ... the filter for the Recipes we want to count
+     *   }
+     * })
+    **/
+    count<T extends RecipeCountArgs>(
+      args?: Subset<T, RecipeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RecipeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Recipe.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecipeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RecipeAggregateArgs>(args: Subset<T, RecipeAggregateArgs>): Prisma.PrismaPromise<GetRecipeAggregateType<T>>
+
+    /**
+     * Group by Recipe.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecipeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RecipeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RecipeGroupByArgs['orderBy'] }
+        : { orderBy?: RecipeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RecipeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRecipeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Recipe model
+   */
+  readonly fields: RecipeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Recipe.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RecipeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    supply<T extends SupplyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SupplyDefaultArgs<ExtArgs>>): Prisma__SupplyClient<$Result.GetResult<Prisma.$SupplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Recipe model
+   */
+  interface RecipeFieldRefs {
+    readonly id: FieldRef<"Recipe", 'String'>
+    readonly productId: FieldRef<"Recipe", 'String'>
+    readonly supplyId: FieldRef<"Recipe", 'String'>
+    readonly amount: FieldRef<"Recipe", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Recipe findUnique
+   */
+  export type RecipeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * Filter, which Recipe to fetch.
+     */
+    where: RecipeWhereUniqueInput
+  }
+
+  /**
+   * Recipe findUniqueOrThrow
+   */
+  export type RecipeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * Filter, which Recipe to fetch.
+     */
+    where: RecipeWhereUniqueInput
+  }
+
+  /**
+   * Recipe findFirst
+   */
+  export type RecipeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * Filter, which Recipe to fetch.
+     */
+    where?: RecipeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Recipes to fetch.
+     */
+    orderBy?: RecipeOrderByWithRelationInput | RecipeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Recipes.
+     */
+    cursor?: RecipeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Recipes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Recipes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Recipes.
+     */
+    distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
+  }
+
+  /**
+   * Recipe findFirstOrThrow
+   */
+  export type RecipeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * Filter, which Recipe to fetch.
+     */
+    where?: RecipeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Recipes to fetch.
+     */
+    orderBy?: RecipeOrderByWithRelationInput | RecipeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Recipes.
+     */
+    cursor?: RecipeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Recipes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Recipes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Recipes.
+     */
+    distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
+  }
+
+  /**
+   * Recipe findMany
+   */
+  export type RecipeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * Filter, which Recipes to fetch.
+     */
+    where?: RecipeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Recipes to fetch.
+     */
+    orderBy?: RecipeOrderByWithRelationInput | RecipeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Recipes.
+     */
+    cursor?: RecipeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Recipes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Recipes.
+     */
+    skip?: number
+    distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
+  }
+
+  /**
+   * Recipe create
+   */
+  export type RecipeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Recipe.
+     */
+    data: XOR<RecipeCreateInput, RecipeUncheckedCreateInput>
+  }
+
+  /**
+   * Recipe createMany
+   */
+  export type RecipeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Recipes.
+     */
+    data: RecipeCreateManyInput | RecipeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Recipe createManyAndReturn
+   */
+  export type RecipeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * The data used to create many Recipes.
+     */
+    data: RecipeCreateManyInput | RecipeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Recipe update
+   */
+  export type RecipeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Recipe.
+     */
+    data: XOR<RecipeUpdateInput, RecipeUncheckedUpdateInput>
+    /**
+     * Choose, which Recipe to update.
+     */
+    where: RecipeWhereUniqueInput
+  }
+
+  /**
+   * Recipe updateMany
+   */
+  export type RecipeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Recipes.
+     */
+    data: XOR<RecipeUpdateManyMutationInput, RecipeUncheckedUpdateManyInput>
+    /**
+     * Filter which Recipes to update
+     */
+    where?: RecipeWhereInput
+    /**
+     * Limit how many Recipes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Recipe updateManyAndReturn
+   */
+  export type RecipeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * The data used to update Recipes.
+     */
+    data: XOR<RecipeUpdateManyMutationInput, RecipeUncheckedUpdateManyInput>
+    /**
+     * Filter which Recipes to update
+     */
+    where?: RecipeWhereInput
+    /**
+     * Limit how many Recipes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Recipe upsert
+   */
+  export type RecipeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Recipe to update in case it exists.
+     */
+    where: RecipeWhereUniqueInput
+    /**
+     * In case the Recipe found by the `where` argument doesn't exist, create a new Recipe with this data.
+     */
+    create: XOR<RecipeCreateInput, RecipeUncheckedCreateInput>
+    /**
+     * In case the Recipe was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RecipeUpdateInput, RecipeUncheckedUpdateInput>
+  }
+
+  /**
+   * Recipe delete
+   */
+  export type RecipeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    /**
+     * Filter which Recipe to delete.
+     */
+    where: RecipeWhereUniqueInput
+  }
+
+  /**
+   * Recipe deleteMany
+   */
+  export type RecipeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Recipes to delete
+     */
+    where?: RecipeWhereInput
+    /**
+     * Limit how many Recipes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Recipe without action
+   */
+  export type RecipeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipe
+     */
+    omit?: RecipeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipeInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -11801,6 +14285,29 @@ export namespace Prisma {
   };
 
   export type TransactionItemScalarFieldEnum = (typeof TransactionItemScalarFieldEnum)[keyof typeof TransactionItemScalarFieldEnum]
+
+
+  export const SupplyScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    unit: 'unit',
+    stock: 'stock',
+    minStock: 'minStock',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SupplyScalarFieldEnum = (typeof SupplyScalarFieldEnum)[keyof typeof SupplyScalarFieldEnum]
+
+
+  export const RecipeScalarFieldEnum: {
+    id: 'id',
+    productId: 'productId',
+    supplyId: 'supplyId',
+    amount: 'amount'
+  };
+
+  export type RecipeScalarFieldEnum = (typeof RecipeScalarFieldEnum)[keyof typeof RecipeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -11934,6 +14441,20 @@ export namespace Prisma {
    * Reference to a field of type 'TransactionStatus[]'
    */
   export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'SupplyUnit'
+   */
+  export type EnumSupplyUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyUnit'>
+    
+
+
+  /**
+   * Reference to a field of type 'SupplyUnit[]'
+   */
+  export type ListEnumSupplyUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplyUnit[]'>
     
 
 
@@ -12278,6 +14799,7 @@ export namespace Prisma {
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     inventory?: XOR<InventoryNullableScalarRelationFilter, InventoryWhereInput> | null
     transactionItems?: TransactionItemListRelationFilter
+    recipes?: RecipeListRelationFilter
   }
 
   export type ProductOrderByWithRelationInput = {
@@ -12292,6 +14814,7 @@ export namespace Prisma {
     category?: CategoryOrderByWithRelationInput
     inventory?: InventoryOrderByWithRelationInput
     transactionItems?: TransactionItemOrderByRelationAggregateInput
+    recipes?: RecipeOrderByRelationAggregateInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -12309,6 +14832,7 @@ export namespace Prisma {
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     inventory?: XOR<InventoryNullableScalarRelationFilter, InventoryWhereInput> | null
     transactionItems?: TransactionItemListRelationFilter
+    recipes?: RecipeListRelationFilter
   }, "id">
 
   export type ProductOrderByWithAggregationInput = {
@@ -12523,6 +15047,129 @@ export namespace Prisma {
     productId?: StringWithAggregatesFilter<"TransactionItem"> | string
     quantity?: IntWithAggregatesFilter<"TransactionItem"> | number
     price?: DecimalWithAggregatesFilter<"TransactionItem"> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type SupplyWhereInput = {
+    AND?: SupplyWhereInput | SupplyWhereInput[]
+    OR?: SupplyWhereInput[]
+    NOT?: SupplyWhereInput | SupplyWhereInput[]
+    id?: StringFilter<"Supply"> | string
+    name?: StringFilter<"Supply"> | string
+    unit?: EnumSupplyUnitFilter<"Supply"> | $Enums.SupplyUnit
+    stock?: FloatFilter<"Supply"> | number
+    minStock?: FloatFilter<"Supply"> | number
+    createdAt?: DateTimeFilter<"Supply"> | Date | string
+    updatedAt?: DateTimeFilter<"Supply"> | Date | string
+    recipes?: RecipeListRelationFilter
+  }
+
+  export type SupplyOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    unit?: SortOrder
+    stock?: SortOrder
+    minStock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    recipes?: RecipeOrderByRelationAggregateInput
+  }
+
+  export type SupplyWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: SupplyWhereInput | SupplyWhereInput[]
+    OR?: SupplyWhereInput[]
+    NOT?: SupplyWhereInput | SupplyWhereInput[]
+    unit?: EnumSupplyUnitFilter<"Supply"> | $Enums.SupplyUnit
+    stock?: FloatFilter<"Supply"> | number
+    minStock?: FloatFilter<"Supply"> | number
+    createdAt?: DateTimeFilter<"Supply"> | Date | string
+    updatedAt?: DateTimeFilter<"Supply"> | Date | string
+    recipes?: RecipeListRelationFilter
+  }, "id" | "name">
+
+  export type SupplyOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    unit?: SortOrder
+    stock?: SortOrder
+    minStock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SupplyCountOrderByAggregateInput
+    _avg?: SupplyAvgOrderByAggregateInput
+    _max?: SupplyMaxOrderByAggregateInput
+    _min?: SupplyMinOrderByAggregateInput
+    _sum?: SupplySumOrderByAggregateInput
+  }
+
+  export type SupplyScalarWhereWithAggregatesInput = {
+    AND?: SupplyScalarWhereWithAggregatesInput | SupplyScalarWhereWithAggregatesInput[]
+    OR?: SupplyScalarWhereWithAggregatesInput[]
+    NOT?: SupplyScalarWhereWithAggregatesInput | SupplyScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Supply"> | string
+    name?: StringWithAggregatesFilter<"Supply"> | string
+    unit?: EnumSupplyUnitWithAggregatesFilter<"Supply"> | $Enums.SupplyUnit
+    stock?: FloatWithAggregatesFilter<"Supply"> | number
+    minStock?: FloatWithAggregatesFilter<"Supply"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Supply"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Supply"> | Date | string
+  }
+
+  export type RecipeWhereInput = {
+    AND?: RecipeWhereInput | RecipeWhereInput[]
+    OR?: RecipeWhereInput[]
+    NOT?: RecipeWhereInput | RecipeWhereInput[]
+    id?: StringFilter<"Recipe"> | string
+    productId?: StringFilter<"Recipe"> | string
+    supplyId?: StringFilter<"Recipe"> | string
+    amount?: FloatFilter<"Recipe"> | number
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+    supply?: XOR<SupplyScalarRelationFilter, SupplyWhereInput>
+  }
+
+  export type RecipeOrderByWithRelationInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    supplyId?: SortOrder
+    amount?: SortOrder
+    product?: ProductOrderByWithRelationInput
+    supply?: SupplyOrderByWithRelationInput
+  }
+
+  export type RecipeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    productId_supplyId?: RecipeProductIdSupplyIdCompoundUniqueInput
+    AND?: RecipeWhereInput | RecipeWhereInput[]
+    OR?: RecipeWhereInput[]
+    NOT?: RecipeWhereInput | RecipeWhereInput[]
+    productId?: StringFilter<"Recipe"> | string
+    supplyId?: StringFilter<"Recipe"> | string
+    amount?: FloatFilter<"Recipe"> | number
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+    supply?: XOR<SupplyScalarRelationFilter, SupplyWhereInput>
+  }, "id" | "productId_supplyId">
+
+  export type RecipeOrderByWithAggregationInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    supplyId?: SortOrder
+    amount?: SortOrder
+    _count?: RecipeCountOrderByAggregateInput
+    _avg?: RecipeAvgOrderByAggregateInput
+    _max?: RecipeMaxOrderByAggregateInput
+    _min?: RecipeMinOrderByAggregateInput
+    _sum?: RecipeSumOrderByAggregateInput
+  }
+
+  export type RecipeScalarWhereWithAggregatesInput = {
+    AND?: RecipeScalarWhereWithAggregatesInput | RecipeScalarWhereWithAggregatesInput[]
+    OR?: RecipeScalarWhereWithAggregatesInput[]
+    NOT?: RecipeScalarWhereWithAggregatesInput | RecipeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Recipe"> | string
+    productId?: StringWithAggregatesFilter<"Recipe"> | string
+    supplyId?: StringWithAggregatesFilter<"Recipe"> | string
+    amount?: FloatWithAggregatesFilter<"Recipe"> | number
   }
 
   export type AccountCreateInput = {
@@ -12868,6 +15515,7 @@ export namespace Prisma {
     category: CategoryCreateNestedOneWithoutProductsInput
     inventory?: InventoryCreateNestedOneWithoutProductInput
     transactionItems?: TransactionItemCreateNestedManyWithoutProductInput
+    recipes?: RecipeCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateInput = {
@@ -12881,6 +15529,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     inventory?: InventoryUncheckedCreateNestedOneWithoutProductInput
     transactionItems?: TransactionItemUncheckedCreateNestedManyWithoutProductInput
+    recipes?: RecipeUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductUpdateInput = {
@@ -12894,6 +15543,7 @@ export namespace Prisma {
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     inventory?: InventoryUpdateOneWithoutProductNestedInput
     transactionItems?: TransactionItemUpdateManyWithoutProductNestedInput
+    recipes?: RecipeUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateInput = {
@@ -12907,6 +15557,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     inventory?: InventoryUncheckedUpdateOneWithoutProductNestedInput
     transactionItems?: TransactionItemUncheckedUpdateManyWithoutProductNestedInput
+    recipes?: RecipeUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductCreateManyInput = {
@@ -13122,6 +15773,127 @@ export namespace Prisma {
     productId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type SupplyCreateInput = {
+    id?: string
+    name: string
+    unit: $Enums.SupplyUnit
+    stock?: number
+    minStock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recipes?: RecipeCreateNestedManyWithoutSupplyInput
+  }
+
+  export type SupplyUncheckedCreateInput = {
+    id?: string
+    name: string
+    unit: $Enums.SupplyUnit
+    stock?: number
+    minStock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recipes?: RecipeUncheckedCreateNestedManyWithoutSupplyInput
+  }
+
+  export type SupplyUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: EnumSupplyUnitFieldUpdateOperationsInput | $Enums.SupplyUnit
+    stock?: FloatFieldUpdateOperationsInput | number
+    minStock?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipes?: RecipeUpdateManyWithoutSupplyNestedInput
+  }
+
+  export type SupplyUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: EnumSupplyUnitFieldUpdateOperationsInput | $Enums.SupplyUnit
+    stock?: FloatFieldUpdateOperationsInput | number
+    minStock?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipes?: RecipeUncheckedUpdateManyWithoutSupplyNestedInput
+  }
+
+  export type SupplyCreateManyInput = {
+    id?: string
+    name: string
+    unit: $Enums.SupplyUnit
+    stock?: number
+    minStock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupplyUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: EnumSupplyUnitFieldUpdateOperationsInput | $Enums.SupplyUnit
+    stock?: FloatFieldUpdateOperationsInput | number
+    minStock?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupplyUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: EnumSupplyUnitFieldUpdateOperationsInput | $Enums.SupplyUnit
+    stock?: FloatFieldUpdateOperationsInput | number
+    minStock?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecipeCreateInput = {
+    id?: string
+    amount: number
+    product: ProductCreateNestedOneWithoutRecipesInput
+    supply: SupplyCreateNestedOneWithoutRecipesInput
+  }
+
+  export type RecipeUncheckedCreateInput = {
+    id?: string
+    productId: string
+    supplyId: string
+    amount: number
+  }
+
+  export type RecipeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    product?: ProductUpdateOneRequiredWithoutRecipesNestedInput
+    supply?: SupplyUpdateOneRequiredWithoutRecipesNestedInput
+  }
+
+  export type RecipeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    supplyId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type RecipeCreateManyInput = {
+    id?: string
+    productId: string
+    supplyId: string
+    amount: number
+  }
+
+  export type RecipeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type RecipeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    supplyId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -13514,7 +16286,17 @@ export namespace Prisma {
     none?: TransactionItemWhereInput
   }
 
+  export type RecipeListRelationFilter = {
+    every?: RecipeWhereInput
+    some?: RecipeWhereInput
+    none?: RecipeWhereInput
+  }
+
   export type TransactionItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RecipeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13762,6 +16544,129 @@ export namespace Prisma {
     price?: SortOrder
   }
 
+  export type EnumSupplyUnitFilter<$PrismaModel = never> = {
+    equals?: $Enums.SupplyUnit | EnumSupplyUnitFieldRefInput<$PrismaModel>
+    in?: $Enums.SupplyUnit[] | ListEnumSupplyUnitFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SupplyUnit[] | ListEnumSupplyUnitFieldRefInput<$PrismaModel>
+    not?: NestedEnumSupplyUnitFilter<$PrismaModel> | $Enums.SupplyUnit
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type SupplyCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    unit?: SortOrder
+    stock?: SortOrder
+    minStock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupplyAvgOrderByAggregateInput = {
+    stock?: SortOrder
+    minStock?: SortOrder
+  }
+
+  export type SupplyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    unit?: SortOrder
+    stock?: SortOrder
+    minStock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupplyMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    unit?: SortOrder
+    stock?: SortOrder
+    minStock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupplySumOrderByAggregateInput = {
+    stock?: SortOrder
+    minStock?: SortOrder
+  }
+
+  export type EnumSupplyUnitWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SupplyUnit | EnumSupplyUnitFieldRefInput<$PrismaModel>
+    in?: $Enums.SupplyUnit[] | ListEnumSupplyUnitFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SupplyUnit[] | ListEnumSupplyUnitFieldRefInput<$PrismaModel>
+    not?: NestedEnumSupplyUnitWithAggregatesFilter<$PrismaModel> | $Enums.SupplyUnit
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSupplyUnitFilter<$PrismaModel>
+    _max?: NestedEnumSupplyUnitFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type SupplyScalarRelationFilter = {
+    is?: SupplyWhereInput
+    isNot?: SupplyWhereInput
+  }
+
+  export type RecipeProductIdSupplyIdCompoundUniqueInput = {
+    productId: string
+    supplyId: string
+  }
+
+  export type RecipeCountOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    supplyId?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type RecipeAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type RecipeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    supplyId?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type RecipeMinOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    supplyId?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type RecipeSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -13963,6 +16868,13 @@ export namespace Prisma {
     connect?: TransactionItemWhereUniqueInput | TransactionItemWhereUniqueInput[]
   }
 
+  export type RecipeCreateNestedManyWithoutProductInput = {
+    create?: XOR<RecipeCreateWithoutProductInput, RecipeUncheckedCreateWithoutProductInput> | RecipeCreateWithoutProductInput[] | RecipeUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutProductInput | RecipeCreateOrConnectWithoutProductInput[]
+    createMany?: RecipeCreateManyProductInputEnvelope
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+  }
+
   export type InventoryUncheckedCreateNestedOneWithoutProductInput = {
     create?: XOR<InventoryCreateWithoutProductInput, InventoryUncheckedCreateWithoutProductInput>
     connectOrCreate?: InventoryCreateOrConnectWithoutProductInput
@@ -13974,6 +16886,13 @@ export namespace Prisma {
     connectOrCreate?: TransactionItemCreateOrConnectWithoutProductInput | TransactionItemCreateOrConnectWithoutProductInput[]
     createMany?: TransactionItemCreateManyProductInputEnvelope
     connect?: TransactionItemWhereUniqueInput | TransactionItemWhereUniqueInput[]
+  }
+
+  export type RecipeUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<RecipeCreateWithoutProductInput, RecipeUncheckedCreateWithoutProductInput> | RecipeCreateWithoutProductInput[] | RecipeUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutProductInput | RecipeCreateOrConnectWithoutProductInput[]
+    createMany?: RecipeCreateManyProductInputEnvelope
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
   }
 
   export type DecimalFieldUpdateOperationsInput = {
@@ -14020,6 +16939,20 @@ export namespace Prisma {
     deleteMany?: TransactionItemScalarWhereInput | TransactionItemScalarWhereInput[]
   }
 
+  export type RecipeUpdateManyWithoutProductNestedInput = {
+    create?: XOR<RecipeCreateWithoutProductInput, RecipeUncheckedCreateWithoutProductInput> | RecipeCreateWithoutProductInput[] | RecipeUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutProductInput | RecipeCreateOrConnectWithoutProductInput[]
+    upsert?: RecipeUpsertWithWhereUniqueWithoutProductInput | RecipeUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: RecipeCreateManyProductInputEnvelope
+    set?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    disconnect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    delete?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    update?: RecipeUpdateWithWhereUniqueWithoutProductInput | RecipeUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: RecipeUpdateManyWithWhereWithoutProductInput | RecipeUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
+  }
+
   export type InventoryUncheckedUpdateOneWithoutProductNestedInput = {
     create?: XOR<InventoryCreateWithoutProductInput, InventoryUncheckedCreateWithoutProductInput>
     connectOrCreate?: InventoryCreateOrConnectWithoutProductInput
@@ -14042,6 +16975,20 @@ export namespace Prisma {
     update?: TransactionItemUpdateWithWhereUniqueWithoutProductInput | TransactionItemUpdateWithWhereUniqueWithoutProductInput[]
     updateMany?: TransactionItemUpdateManyWithWhereWithoutProductInput | TransactionItemUpdateManyWithWhereWithoutProductInput[]
     deleteMany?: TransactionItemScalarWhereInput | TransactionItemScalarWhereInput[]
+  }
+
+  export type RecipeUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<RecipeCreateWithoutProductInput, RecipeUncheckedCreateWithoutProductInput> | RecipeCreateWithoutProductInput[] | RecipeUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutProductInput | RecipeCreateOrConnectWithoutProductInput[]
+    upsert?: RecipeUpsertWithWhereUniqueWithoutProductInput | RecipeUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: RecipeCreateManyProductInputEnvelope
+    set?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    disconnect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    delete?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    update?: RecipeUpdateWithWhereUniqueWithoutProductInput | RecipeUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: RecipeUpdateManyWithWhereWithoutProductInput | RecipeUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
   }
 
   export type ProductCreateNestedOneWithoutInventoryInput = {
@@ -14142,6 +17089,88 @@ export namespace Prisma {
     upsert?: ProductUpsertWithoutTransactionItemsInput
     connect?: ProductWhereUniqueInput
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutTransactionItemsInput, ProductUpdateWithoutTransactionItemsInput>, ProductUncheckedUpdateWithoutTransactionItemsInput>
+  }
+
+  export type RecipeCreateNestedManyWithoutSupplyInput = {
+    create?: XOR<RecipeCreateWithoutSupplyInput, RecipeUncheckedCreateWithoutSupplyInput> | RecipeCreateWithoutSupplyInput[] | RecipeUncheckedCreateWithoutSupplyInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutSupplyInput | RecipeCreateOrConnectWithoutSupplyInput[]
+    createMany?: RecipeCreateManySupplyInputEnvelope
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+  }
+
+  export type RecipeUncheckedCreateNestedManyWithoutSupplyInput = {
+    create?: XOR<RecipeCreateWithoutSupplyInput, RecipeUncheckedCreateWithoutSupplyInput> | RecipeCreateWithoutSupplyInput[] | RecipeUncheckedCreateWithoutSupplyInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutSupplyInput | RecipeCreateOrConnectWithoutSupplyInput[]
+    createMany?: RecipeCreateManySupplyInputEnvelope
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+  }
+
+  export type EnumSupplyUnitFieldUpdateOperationsInput = {
+    set?: $Enums.SupplyUnit
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type RecipeUpdateManyWithoutSupplyNestedInput = {
+    create?: XOR<RecipeCreateWithoutSupplyInput, RecipeUncheckedCreateWithoutSupplyInput> | RecipeCreateWithoutSupplyInput[] | RecipeUncheckedCreateWithoutSupplyInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutSupplyInput | RecipeCreateOrConnectWithoutSupplyInput[]
+    upsert?: RecipeUpsertWithWhereUniqueWithoutSupplyInput | RecipeUpsertWithWhereUniqueWithoutSupplyInput[]
+    createMany?: RecipeCreateManySupplyInputEnvelope
+    set?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    disconnect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    delete?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    update?: RecipeUpdateWithWhereUniqueWithoutSupplyInput | RecipeUpdateWithWhereUniqueWithoutSupplyInput[]
+    updateMany?: RecipeUpdateManyWithWhereWithoutSupplyInput | RecipeUpdateManyWithWhereWithoutSupplyInput[]
+    deleteMany?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
+  }
+
+  export type RecipeUncheckedUpdateManyWithoutSupplyNestedInput = {
+    create?: XOR<RecipeCreateWithoutSupplyInput, RecipeUncheckedCreateWithoutSupplyInput> | RecipeCreateWithoutSupplyInput[] | RecipeUncheckedCreateWithoutSupplyInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutSupplyInput | RecipeCreateOrConnectWithoutSupplyInput[]
+    upsert?: RecipeUpsertWithWhereUniqueWithoutSupplyInput | RecipeUpsertWithWhereUniqueWithoutSupplyInput[]
+    createMany?: RecipeCreateManySupplyInputEnvelope
+    set?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    disconnect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    delete?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    update?: RecipeUpdateWithWhereUniqueWithoutSupplyInput | RecipeUpdateWithWhereUniqueWithoutSupplyInput[]
+    updateMany?: RecipeUpdateManyWithWhereWithoutSupplyInput | RecipeUpdateManyWithWhereWithoutSupplyInput[]
+    deleteMany?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
+  }
+
+  export type ProductCreateNestedOneWithoutRecipesInput = {
+    create?: XOR<ProductCreateWithoutRecipesInput, ProductUncheckedCreateWithoutRecipesInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutRecipesInput
+    connect?: ProductWhereUniqueInput
+  }
+
+  export type SupplyCreateNestedOneWithoutRecipesInput = {
+    create?: XOR<SupplyCreateWithoutRecipesInput, SupplyUncheckedCreateWithoutRecipesInput>
+    connectOrCreate?: SupplyCreateOrConnectWithoutRecipesInput
+    connect?: SupplyWhereUniqueInput
+  }
+
+  export type ProductUpdateOneRequiredWithoutRecipesNestedInput = {
+    create?: XOR<ProductCreateWithoutRecipesInput, ProductUncheckedCreateWithoutRecipesInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutRecipesInput
+    upsert?: ProductUpsertWithoutRecipesInput
+    connect?: ProductWhereUniqueInput
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutRecipesInput, ProductUpdateWithoutRecipesInput>, ProductUncheckedUpdateWithoutRecipesInput>
+  }
+
+  export type SupplyUpdateOneRequiredWithoutRecipesNestedInput = {
+    create?: XOR<SupplyCreateWithoutRecipesInput, SupplyUncheckedCreateWithoutRecipesInput>
+    connectOrCreate?: SupplyCreateOrConnectWithoutRecipesInput
+    upsert?: SupplyUpsertWithoutRecipesInput
+    connect?: SupplyWhereUniqueInput
+    update?: XOR<XOR<SupplyUpdateToOneWithWhereWithoutRecipesInput, SupplyUpdateWithoutRecipesInput>, SupplyUncheckedUpdateWithoutRecipesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -14423,6 +17452,39 @@ export namespace Prisma {
     _max?: NestedEnumTransactionStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumSupplyUnitFilter<$PrismaModel = never> = {
+    equals?: $Enums.SupplyUnit | EnumSupplyUnitFieldRefInput<$PrismaModel>
+    in?: $Enums.SupplyUnit[] | ListEnumSupplyUnitFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SupplyUnit[] | ListEnumSupplyUnitFieldRefInput<$PrismaModel>
+    not?: NestedEnumSupplyUnitFilter<$PrismaModel> | $Enums.SupplyUnit
+  }
+
+  export type NestedEnumSupplyUnitWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SupplyUnit | EnumSupplyUnitFieldRefInput<$PrismaModel>
+    in?: $Enums.SupplyUnit[] | ListEnumSupplyUnitFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SupplyUnit[] | ListEnumSupplyUnitFieldRefInput<$PrismaModel>
+    not?: NestedEnumSupplyUnitWithAggregatesFilter<$PrismaModel> | $Enums.SupplyUnit
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSupplyUnitFilter<$PrismaModel>
+    _max?: NestedEnumSupplyUnitFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     name?: string | null
@@ -14684,6 +17746,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     inventory?: InventoryCreateNestedOneWithoutProductInput
     transactionItems?: TransactionItemCreateNestedManyWithoutProductInput
+    recipes?: RecipeCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutCategoryInput = {
@@ -14696,6 +17759,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     inventory?: InventoryUncheckedCreateNestedOneWithoutProductInput
     transactionItems?: TransactionItemUncheckedCreateNestedManyWithoutProductInput
+    recipes?: RecipeUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutCategoryInput = {
@@ -14796,6 +17860,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type RecipeCreateWithoutProductInput = {
+    id?: string
+    amount: number
+    supply: SupplyCreateNestedOneWithoutRecipesInput
+  }
+
+  export type RecipeUncheckedCreateWithoutProductInput = {
+    id?: string
+    supplyId: string
+    amount: number
+  }
+
+  export type RecipeCreateOrConnectWithoutProductInput = {
+    where: RecipeWhereUniqueInput
+    create: XOR<RecipeCreateWithoutProductInput, RecipeUncheckedCreateWithoutProductInput>
+  }
+
+  export type RecipeCreateManyProductInputEnvelope = {
+    data: RecipeCreateManyProductInput | RecipeCreateManyProductInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CategoryUpsertWithoutProductsInput = {
     update: XOR<CategoryUpdateWithoutProductsInput, CategoryUncheckedUpdateWithoutProductsInput>
     create: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
@@ -14869,6 +17955,32 @@ export namespace Prisma {
     price?: DecimalFilter<"TransactionItem"> | Decimal | DecimalJsLike | number | string
   }
 
+  export type RecipeUpsertWithWhereUniqueWithoutProductInput = {
+    where: RecipeWhereUniqueInput
+    update: XOR<RecipeUpdateWithoutProductInput, RecipeUncheckedUpdateWithoutProductInput>
+    create: XOR<RecipeCreateWithoutProductInput, RecipeUncheckedCreateWithoutProductInput>
+  }
+
+  export type RecipeUpdateWithWhereUniqueWithoutProductInput = {
+    where: RecipeWhereUniqueInput
+    data: XOR<RecipeUpdateWithoutProductInput, RecipeUncheckedUpdateWithoutProductInput>
+  }
+
+  export type RecipeUpdateManyWithWhereWithoutProductInput = {
+    where: RecipeScalarWhereInput
+    data: XOR<RecipeUpdateManyMutationInput, RecipeUncheckedUpdateManyWithoutProductInput>
+  }
+
+  export type RecipeScalarWhereInput = {
+    AND?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
+    OR?: RecipeScalarWhereInput[]
+    NOT?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
+    id?: StringFilter<"Recipe"> | string
+    productId?: StringFilter<"Recipe"> | string
+    supplyId?: StringFilter<"Recipe"> | string
+    amount?: FloatFilter<"Recipe"> | number
+  }
+
   export type ProductCreateWithoutInventoryInput = {
     id?: string
     name: string
@@ -14879,6 +17991,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutProductsInput
     transactionItems?: TransactionItemCreateNestedManyWithoutProductInput
+    recipes?: RecipeCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutInventoryInput = {
@@ -14891,6 +18004,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     transactionItems?: TransactionItemUncheckedCreateNestedManyWithoutProductInput
+    recipes?: RecipeUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutInventoryInput = {
@@ -14919,6 +18033,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     transactionItems?: TransactionItemUpdateManyWithoutProductNestedInput
+    recipes?: RecipeUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutInventoryInput = {
@@ -14931,6 +18046,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactionItems?: TransactionItemUncheckedUpdateManyWithoutProductNestedInput
+    recipes?: RecipeUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type TransactionItemCreateWithoutTransactionInput = {
@@ -15010,6 +18126,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutProductsInput
     inventory?: InventoryCreateNestedOneWithoutProductInput
+    recipes?: RecipeCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutTransactionItemsInput = {
@@ -15022,6 +18139,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     inventory?: InventoryUncheckedCreateNestedOneWithoutProductInput
+    recipes?: RecipeUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutTransactionItemsInput = {
@@ -15083,6 +18201,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     inventory?: InventoryUpdateOneWithoutProductNestedInput
+    recipes?: RecipeUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutTransactionItemsInput = {
@@ -15095,6 +18214,169 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     inventory?: InventoryUncheckedUpdateOneWithoutProductNestedInput
+    recipes?: RecipeUncheckedUpdateManyWithoutProductNestedInput
+  }
+
+  export type RecipeCreateWithoutSupplyInput = {
+    id?: string
+    amount: number
+    product: ProductCreateNestedOneWithoutRecipesInput
+  }
+
+  export type RecipeUncheckedCreateWithoutSupplyInput = {
+    id?: string
+    productId: string
+    amount: number
+  }
+
+  export type RecipeCreateOrConnectWithoutSupplyInput = {
+    where: RecipeWhereUniqueInput
+    create: XOR<RecipeCreateWithoutSupplyInput, RecipeUncheckedCreateWithoutSupplyInput>
+  }
+
+  export type RecipeCreateManySupplyInputEnvelope = {
+    data: RecipeCreateManySupplyInput | RecipeCreateManySupplyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RecipeUpsertWithWhereUniqueWithoutSupplyInput = {
+    where: RecipeWhereUniqueInput
+    update: XOR<RecipeUpdateWithoutSupplyInput, RecipeUncheckedUpdateWithoutSupplyInput>
+    create: XOR<RecipeCreateWithoutSupplyInput, RecipeUncheckedCreateWithoutSupplyInput>
+  }
+
+  export type RecipeUpdateWithWhereUniqueWithoutSupplyInput = {
+    where: RecipeWhereUniqueInput
+    data: XOR<RecipeUpdateWithoutSupplyInput, RecipeUncheckedUpdateWithoutSupplyInput>
+  }
+
+  export type RecipeUpdateManyWithWhereWithoutSupplyInput = {
+    where: RecipeScalarWhereInput
+    data: XOR<RecipeUpdateManyMutationInput, RecipeUncheckedUpdateManyWithoutSupplyInput>
+  }
+
+  export type ProductCreateWithoutRecipesInput = {
+    id?: string
+    name: string
+    price: Decimal | DecimalJsLike | number | string
+    imageUrl?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category: CategoryCreateNestedOneWithoutProductsInput
+    inventory?: InventoryCreateNestedOneWithoutProductInput
+    transactionItems?: TransactionItemCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductUncheckedCreateWithoutRecipesInput = {
+    id?: string
+    name: string
+    price: Decimal | DecimalJsLike | number | string
+    imageUrl?: string | null
+    isActive?: boolean
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    inventory?: InventoryUncheckedCreateNestedOneWithoutProductInput
+    transactionItems?: TransactionItemUncheckedCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductCreateOrConnectWithoutRecipesInput = {
+    where: ProductWhereUniqueInput
+    create: XOR<ProductCreateWithoutRecipesInput, ProductUncheckedCreateWithoutRecipesInput>
+  }
+
+  export type SupplyCreateWithoutRecipesInput = {
+    id?: string
+    name: string
+    unit: $Enums.SupplyUnit
+    stock?: number
+    minStock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupplyUncheckedCreateWithoutRecipesInput = {
+    id?: string
+    name: string
+    unit: $Enums.SupplyUnit
+    stock?: number
+    minStock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupplyCreateOrConnectWithoutRecipesInput = {
+    where: SupplyWhereUniqueInput
+    create: XOR<SupplyCreateWithoutRecipesInput, SupplyUncheckedCreateWithoutRecipesInput>
+  }
+
+  export type ProductUpsertWithoutRecipesInput = {
+    update: XOR<ProductUpdateWithoutRecipesInput, ProductUncheckedUpdateWithoutRecipesInput>
+    create: XOR<ProductCreateWithoutRecipesInput, ProductUncheckedCreateWithoutRecipesInput>
+    where?: ProductWhereInput
+  }
+
+  export type ProductUpdateToOneWithWhereWithoutRecipesInput = {
+    where?: ProductWhereInput
+    data: XOR<ProductUpdateWithoutRecipesInput, ProductUncheckedUpdateWithoutRecipesInput>
+  }
+
+  export type ProductUpdateWithoutRecipesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
+    inventory?: InventoryUpdateOneWithoutProductNestedInput
+    transactionItems?: TransactionItemUpdateManyWithoutProductNestedInput
+  }
+
+  export type ProductUncheckedUpdateWithoutRecipesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    inventory?: InventoryUncheckedUpdateOneWithoutProductNestedInput
+    transactionItems?: TransactionItemUncheckedUpdateManyWithoutProductNestedInput
+  }
+
+  export type SupplyUpsertWithoutRecipesInput = {
+    update: XOR<SupplyUpdateWithoutRecipesInput, SupplyUncheckedUpdateWithoutRecipesInput>
+    create: XOR<SupplyCreateWithoutRecipesInput, SupplyUncheckedCreateWithoutRecipesInput>
+    where?: SupplyWhereInput
+  }
+
+  export type SupplyUpdateToOneWithWhereWithoutRecipesInput = {
+    where?: SupplyWhereInput
+    data: XOR<SupplyUpdateWithoutRecipesInput, SupplyUncheckedUpdateWithoutRecipesInput>
+  }
+
+  export type SupplyUpdateWithoutRecipesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: EnumSupplyUnitFieldUpdateOperationsInput | $Enums.SupplyUnit
+    stock?: FloatFieldUpdateOperationsInput | number
+    minStock?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupplyUncheckedUpdateWithoutRecipesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    unit?: EnumSupplyUnitFieldUpdateOperationsInput | $Enums.SupplyUnit
+    stock?: FloatFieldUpdateOperationsInput | number
+    minStock?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AccountCreateManyUserInput = {
@@ -15201,6 +18483,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     inventory?: InventoryUpdateOneWithoutProductNestedInput
     transactionItems?: TransactionItemUpdateManyWithoutProductNestedInput
+    recipes?: RecipeUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutCategoryInput = {
@@ -15213,6 +18496,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     inventory?: InventoryUncheckedUpdateOneWithoutProductNestedInput
     transactionItems?: TransactionItemUncheckedUpdateManyWithoutProductNestedInput
+    recipes?: RecipeUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateManyWithoutCategoryInput = {
@@ -15230,6 +18514,12 @@ export namespace Prisma {
     transactionId: string
     quantity: number
     price: Decimal | DecimalJsLike | number | string
+  }
+
+  export type RecipeCreateManyProductInput = {
+    id?: string
+    supplyId: string
+    amount: number
   }
 
   export type TransactionItemUpdateWithoutProductInput = {
@@ -15251,6 +18541,24 @@ export namespace Prisma {
     transactionId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type RecipeUpdateWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    supply?: SupplyUpdateOneRequiredWithoutRecipesNestedInput
+  }
+
+  export type RecipeUncheckedUpdateWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    supplyId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type RecipeUncheckedUpdateManyWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    supplyId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
   }
 
   export type TransactionItemCreateManyTransactionInput = {
@@ -15279,6 +18587,30 @@ export namespace Prisma {
     productId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+  }
+
+  export type RecipeCreateManySupplyInput = {
+    id?: string
+    productId: string
+    amount: number
+  }
+
+  export type RecipeUpdateWithoutSupplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    product?: ProductUpdateOneRequiredWithoutRecipesNestedInput
+  }
+
+  export type RecipeUncheckedUpdateWithoutSupplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type RecipeUncheckedUpdateManyWithoutSupplyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
   }
 
 

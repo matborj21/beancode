@@ -130,7 +130,7 @@ export default function LoginPage() {
           </Button>
         </div>
 
-        <p className="mt-6 text-center text-xs text-amber-400">
+        <p className="mt-6 text-center text-xs text-amber-600">
           BeanCode POS © {new Date().getFullYear()}
         </p>
       </div>

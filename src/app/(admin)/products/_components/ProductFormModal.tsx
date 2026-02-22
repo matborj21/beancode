@@ -229,7 +229,7 @@ export function ProductFormModal({ open, onClose, onSuccess, product }: Props) {
           <div>
             <label className="mb-1 block text-xs font-medium text-amber-700">
               Image URL{" "}
-              <span className="font-normal text-amber-400">(optional)</span>
+              <span className="font-normal text-amber-600">(optional)</span>
             </label>
             <Input
               value={imageUrl}

@@ -150,6 +150,207 @@ async function main() {
     });
   }
 
+  console.log("🌱 Seeding supplies...");
+
+  // Create supplies
+  const beans = await prisma.supply.upsert({
+    where: { name: "Coffee Beans" },
+    update: {},
+    create: {
+      name: "Coffee Beans",
+      unit: "GRAMS",
+      stock: 5000,
+      minStock: 500,
+    },
+  });
+
+  const milk = await prisma.supply.upsert({
+    where: { name: "Milk" },
+    update: {},
+    create: {
+      name: "Milk",
+      unit: "ML",
+      stock: 10000,
+      minStock: 1000,
+    },
+  });
+
+  const syrup = await prisma.supply.upsert({
+    where: { name: "Syrup" },
+    update: {},
+    create: {
+      name: "Syrup",
+      unit: "ML",
+      stock: 3000,
+      minStock: 300,
+    },
+  });
+
+  const cups = await prisma.supply.upsert({
+    where: { name: "Cups" },
+    update: {},
+    create: {
+      name: "Cups",
+      unit: "UNITS",
+      stock: 500,
+      minStock: 50,
+    },
+  });
+
+  const sugar = await prisma.supply.upsert({
+    where: { name: "Sugar" },
+    update: {},
+    create: {
+      name: "Sugar",
+      unit: "GRAMS",
+      stock: 5000,
+      minStock: 500,
+    },
+  });
+
+  const cream = await prisma.supply.upsert({
+    where: { name: "Cream" },
+    update: {},
+    create: {
+      name: "Cream",
+      unit: "ML",
+      stock: 3000,
+      minStock: 300,
+    },
+  });
+
+  console.log("✅ Supplies created");
+
+  // Fetch all products to set up recipes
+  const allProducts = await prisma.product.findMany({
+    include: { category: true },
+  });
+
+  // Helper to find product by name
+  const findProduct = (name: string) =>
+    allProducts.find((p) => p.name === name);
+
+  // Define recipes per product
+  const recipes: Array<{
+    productName: string;
+    ingredients: Array<{ supplyId: string; amount: number }>;
+  }> = [
+    {
+      productName: "Espresso",
+      ingredients: [
+        { supplyId: beans.id, amount: 18 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Americano",
+      ingredients: [
+        { supplyId: beans.id, amount: 18 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Cappuccino",
+      ingredients: [
+        { supplyId: beans.id, amount: 18 },
+        { supplyId: milk.id, amount: 120 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Latte",
+      ingredients: [
+        { supplyId: beans.id, amount: 18 },
+        { supplyId: milk.id, amount: 180 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Flat White",
+      ingredients: [
+        { supplyId: beans.id, amount: 18 },
+        { supplyId: milk.id, amount: 130 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Matcha Latte",
+      ingredients: [
+        { supplyId: milk.id, amount: 180 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Chocolate",
+      ingredients: [
+        { supplyId: milk.id, amount: 150 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Strawberry Milk",
+      ingredients: [
+        { supplyId: milk.id, amount: 150 },
+        { supplyId: syrup.id, amount: 20 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Croissant",
+      ingredients: [],
+    },
+    {
+      productName: "Blueberry Muffin",
+      ingredients: [],
+    },
+    {
+      productName: "Cinnamon Roll",
+      ingredients: [],
+    },
+    {
+      productName: "Cold Brew Float",
+      ingredients: [
+        { supplyId: beans.id, amount: 25 },
+        { supplyId: cream.id, amount: 60 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+    {
+      productName: "Caramel Macchiato",
+      ingredients: [
+        { supplyId: beans.id, amount: 18 },
+        { supplyId: milk.id, amount: 150 },
+        { supplyId: syrup.id, amount: 15 },
+        { supplyId: cups.id, amount: 1 },
+      ],
+    },
+  ];
+
+  // Create recipes
+  for (const recipe of recipes) {
+    const product = findProduct(recipe.productName);
+    if (!product) continue;
+
+    for (const ingredient of recipe.ingredients) {
+      await prisma.recipe.upsert({
+        where: {
+          productId_supplyId: {
+            productId: product.id,
+            supplyId: ingredient.supplyId,
+          },
+        },
+        update: { amount: ingredient.amount },
+        create: {
+          productId: product.id,
+          supplyId: ingredient.supplyId,
+          amount: ingredient.amount,
+        },
+      });
+    }
+  }
+
+  console.log("✅ Recipes created");
+
   const hashedPassword = await bcrypt.hash("admin123", 12);
 
   await prisma.user.upsert({
@@ -191,6 +392,7 @@ async function main() {
   console.log("✅ Users seeded");
 
   console.log("✅ Products + Inventory created");
+
   console.log("🎉 Seeding complete!");
 }
 

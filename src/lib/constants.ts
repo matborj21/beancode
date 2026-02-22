@@ -16,3 +16,5 @@ export const PAYMENT_LABELS: Record<string, string> = {
   GCASH: "📱 GCash",
   CARD: "💳 Card",
 };
+
+export const LOW_STOCK_THRESHOLD = 10;

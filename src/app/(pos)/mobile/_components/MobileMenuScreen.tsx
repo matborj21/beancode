@@ -49,7 +49,7 @@ export function MobileMenuScreen() {
         </div>
         {/* Search */}
         <div className="mt-2 flex items-center gap-2 rounded-xl bg-amber-800 px-3 py-2">
-          <Search size={18} className="text-amber-400" />
+          <Search size={18} className="text-amber-600" />
           <input
             type="text"
             placeholder="Search menu..."

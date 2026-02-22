@@ -32,7 +32,7 @@ export function BottomNav({ active }: Props) {
               key={label}
               href={href}
               className={`flex flex-col items-center gap-1 px-3 py-2 ${
-                isActive ? "text-amber-900" : "text-amber-400"
+                isActive ? "text-amber-900" : "text-amber-600"
               }`}
             >
               <Icon size={22} />

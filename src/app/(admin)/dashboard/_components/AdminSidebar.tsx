@@ -8,15 +8,19 @@ import {
   ShoppingBag,
   Users,
   Boxes,
+  ChefHat,
+  FlaskConical,
 } from "lucide-react";
 import { SignOutButton } from "@/components/pos/SignOutButton";
 
 const NAV_ITEMS = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
   { label: "Products", icon: Package, href: "/products" },
+  { label: "Inventory", icon: Boxes, href: "/inventory" },
   { label: "Sales", icon: ShoppingBag, href: "/sales" },
+  { label: "Supplies", icon: FlaskConical, href: "/supplies" },
+  { label: "Recipes", icon: ChefHat, href: "/recipes" },
   { label: "Users", icon: Users, href: "/users" },
-  { label: "Supplies", icon: Boxes, href: "/supplies" },
 ];
 
 export function AdminSidebar() {
@@ -27,7 +31,7 @@ export function AdminSidebar() {
       {/* Logo */}
       <div className="border-b border-amber-100 p-6">
         <h1 className="text-lg font-bold text-amber-900">BeanCode</h1>
-        <p className="text-xs text-amber-400">Admin Dashboard</p>
+        <p className="text-xs text-amber-600">Admin Dashboard</p>
       </div>
 
       {/* Nav */}
@@ -55,7 +59,7 @@ export function AdminSidebar() {
       <div className="space-y-2 border-t border-amber-100 p-4">
         <Link
           href="/desktop"
-          className="flex items-center gap-2 text-xs text-amber-400 hover:text-amber-700"
+          className="flex items-center gap-2 text-xs text-amber-600 hover:text-amber-700"
         >
           ← Back to POS
         </Link>

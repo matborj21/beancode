@@ -17,7 +17,7 @@ export function SignOutButton({ variant = "full" }: Props) {
     return (
       <button
         onClick={handleSignOut}
-        className="flex flex-col items-center gap-1 px-3 py-2 text-amber-400 hover:text-red-400"
+        className="flex flex-col items-center gap-1 px-3 py-2 text-amber-600 hover:text-red-400"
       >
         <LogOut size={22} />
         <span className="text-xs">Sign Out</span>

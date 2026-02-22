@@ -17,7 +17,7 @@ export function SalesReport() {
 
   if (!data || data.breakdown.length === 0) {
     return (
-      <div className="rounded-xl bg-white p-8 text-center text-amber-400 shadow-sm">
+      <div className="rounded-xl bg-white p-8 text-center text-amber-600 shadow-sm">
         No sales data yet.
       </div>
     );
@@ -28,19 +28,19 @@ export function SalesReport() {
       {/* Summary Cards */}
       <div className="grid grid-cols-3 gap-4">
         <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-xs text-amber-400">Total Orders</p>
+          <p className="text-xs text-amber-600">Total Orders</p>
           <p className="text-2xl font-bold text-amber-900">
             {data?.totalOrders}
           </p>
         </div>
         <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-xs text-amber-400">Total Items Sold</p>
+          <p className="text-xs text-amber-600">Total Items Sold</p>
           <p className="text-2xl font-bold text-amber-900">
             {data?.totalQuantity}
           </p>
         </div>
         <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-xs text-amber-400">Total Sales</p>
+          <p className="text-xs text-amber-600">Total Sales</p>
           <p className="text-2xl font-bold text-amber-900">
             ₱{data?.totalSales.toFixed(2)}
           </p>

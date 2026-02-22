@@ -31,7 +31,7 @@ export function DesktopPOSScreen() {
     <div className="flex h-screen bg-amber-50">
       {/* Left: Category Tabs */}
       <div className="flex h-full w-48 flex-col gap-2 border-r border-amber-100 bg-white p-4">
-        <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-400">
+        <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-600">
           Categories
         </h2>
         <div className="mt-4 flex flex-1 flex-col gap-2 overflow-y-auto">

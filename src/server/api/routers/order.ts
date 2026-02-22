@@ -87,6 +87,24 @@ export const orderRouter = createTRPCRouter({
           });
         }
 
+        // Deduct supplies based on recipes
+        for (const item of input.items) {
+          const recipes = await tx.recipe.findMany({
+            where: { productId: item.productId },
+          });
+
+          for (const recipe of recipes) {
+            await tx.supply.update({
+              where: { id: recipe.supplyId },
+              data: {
+                stock: {
+                  decrement: recipe.amount * item.quantity,
+                },
+              },
+            });
+          }
+        }
+
         return created;
       });
 

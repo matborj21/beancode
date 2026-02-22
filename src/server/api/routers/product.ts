@@ -23,6 +23,7 @@ export const productRouter = createTRPCRouter({
         include: {
           category: true,
           inventory: true,
+          recipes: true,
         },
         orderBy: { createdAt: "asc" },
       });

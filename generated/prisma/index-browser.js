@@ -204,6 +204,23 @@ exports.Prisma.TransactionItemScalarFieldEnum = {
   price: 'price'
 };
 
+exports.Prisma.SupplyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  unit: 'unit',
+  stock: 'stock',
+  minStock: 'minStock',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RecipeScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  supplyId: 'supplyId',
+  amount: 'amount'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -237,6 +254,12 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   REFUNDED: 'REFUNDED'
 };
 
+exports.SupplyUnit = exports.$Enums.SupplyUnit = {
+  GRAMS: 'GRAMS',
+  ML: 'ML',
+  UNITS: 'UNITS'
+};
+
 exports.Prisma.ModelName = {
   Account: 'Account',
   Session: 'Session',
@@ -246,7 +269,9 @@ exports.Prisma.ModelName = {
   Product: 'Product',
   Inventory: 'Inventory',
   Transaction: 'Transaction',
-  TransactionItem: 'TransactionItem'
+  TransactionItem: 'TransactionItem',
+  Supply: 'Supply',
+  Recipe: 'Recipe'
 };
 
 /**
