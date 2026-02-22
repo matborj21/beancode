@@ -5,6 +5,7 @@ import { reportRouter } from "./routers/report";
 import { inventoryRouter } from "./routers/inventory";
 import { supplyRouter } from "./routers/supply";
 import { recipeRouter } from "./routers/recipe";
+import { userRouter } from "./routers/user";
 
 export const appRouter = createTRPCRouter({
   product: productRouter,
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   inventory: inventoryRouter,
   supply: supplyRouter,
   recipe: recipeRouter,
+  user: userRouter,
 });
 
 export type AppRouter = typeof appRouter;
