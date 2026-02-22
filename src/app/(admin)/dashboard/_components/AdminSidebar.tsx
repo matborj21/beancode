@@ -13,10 +13,10 @@ import { SignOutButton } from "@/components/pos/SignOutButton";
 
 const NAV_ITEMS = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
-  { label: "Products", icon: Package, href: "/admin/products" },
-  { label: "Sales", icon: ShoppingBag, href: "/admin/sales" },
-  { label: "Users", icon: Users, href: "/admin/users" },
-  { label: "Supplies", icon: Boxes, href: "/admin/supplies" },
+  { label: "Products", icon: Package, href: "/products" },
+  { label: "Sales", icon: ShoppingBag, href: "/sales" },
+  { label: "Users", icon: Users, href: "/users" },
+  { label: "Supplies", icon: Boxes, href: "/supplies" },
 ];
 
 export function AdminSidebar() {

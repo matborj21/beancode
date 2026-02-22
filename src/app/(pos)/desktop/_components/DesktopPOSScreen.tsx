@@ -5,6 +5,7 @@ import { api } from "@/trpc/react";
 import { useCart } from "@/context/CartContext";
 import { ProductCard } from "@/app/components/pos/ProductCard";
 import { DesktopOrderPanel } from "./DesktopOrderPanel";
+import { SignOutButton } from "@/components/pos/SignOutButton";
 
 export function DesktopPOSScreen() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -29,23 +30,27 @@ export function DesktopPOSScreen() {
   return (
     <div className="flex h-screen bg-amber-50">
       {/* Left: Category Tabs */}
-      <div className="flex w-48 flex-col gap-2 overflow-y-auto border-r border-amber-100 bg-white p-4">
+      <div className="flex h-full w-48 flex-col gap-2 border-r border-amber-100 bg-white p-4">
         <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-400">
           Categories
         </h2>
-        {["All", ...categories.map((c) => c.name)].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={`rounded-xl px-4 py-3 text-left text-sm font-semibold transition-colors ${
-              selectedCategory === cat
-                ? "bg-amber-900 text-amber-50"
-                : "text-amber-800 hover:bg-amber-100"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+        <div className="mt-4 flex flex-1 flex-col gap-2 overflow-y-auto">
+          {["All", ...categories.map((c) => c.name)].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`rounded-xl px-4 py-3 text-left text-sm font-semibold transition-colors ${
+                selectedCategory === cat
+                  ? "bg-amber-900 text-amber-50"
+                  : "text-amber-800 hover:bg-amber-100"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <SignOutButton variant="full" />
       </div>
 
       {/* Center: Product Grid */}

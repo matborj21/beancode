@@ -8,6 +8,7 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 
 import { useRouter } from "next/dist/client/components/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
@@ -28,10 +29,10 @@ export function DesktopOrderPanel() {
   const createOrder = api.order.create.useMutation({
     onSuccess: () => {
       clearCart();
-      alert("Transaction processed successfully!");
+      toast.success("Transaction processed successfully!");
     },
     onError: (error) => {
-      alert(error.message);
+      toast.error(error.message);
     },
   });
 
@@ -187,7 +188,16 @@ export function DesktopOrderPanel() {
         <Button
           variant="outline"
           onClick={() => {
-            if (confirm("Void this transaction?")) clearCart();
+            toast("Void this transaction?", {
+              action: {
+                label: "Confirm",
+                onClick: () => clearCart(),
+              },
+              cancel: {
+                label: "Cancel",
+                onClick: () => null,
+              },
+            });
           }}
           disabled={cartItems.length === 0 || createOrder.isPending}
           className="w-full border-red-200 text-red-500 hover:bg-red-50"

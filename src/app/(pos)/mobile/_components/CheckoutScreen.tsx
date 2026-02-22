@@ -9,6 +9,7 @@ import { OrderSummary } from "@/app/components/pos/OrderSummary";
 import { useCart } from "@/context/CartContext";
 import { api } from "@/trpc/react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const PAYMENT_METHODS = ["CASH", "GCASH", "CARD"] as const;
 type PaymentMethod = (typeof PAYMENT_METHODS)[number];
@@ -32,11 +33,11 @@ export function CheckoutScreen() {
   const createOrder = api.order.create.useMutation({
     onSuccess: () => {
       clearCart();
-      alert("Transaction processed successfully!");
+      toast.success("Transaction processed successfully!");
       router.push("/mobile");
     },
     onError: (error) => {
-      alert(error.message);
+      toast.error(error.message);
     },
   });
 
@@ -67,10 +68,19 @@ export function CheckoutScreen() {
   }
 
   function handleVoidTransaction() {
-    if (confirm("Are you sure you want to void this transaction?")) {
-      clearCart();
-      router.push("/mobile");
-    }
+    toast("Void this transaction?", {
+      action: {
+        label: "Confirm",
+        onClick: () => {
+          clearCart();
+          router.push("/mobile");
+        },
+      },
+      cancel: {
+        label: "Cancel",
+        onClick: () => null,
+      },
+    });
   }
 
   if (cartItems.length === 0) {

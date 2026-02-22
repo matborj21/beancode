@@ -1,25 +1,19 @@
 "use client";
 
 import { BottomNav } from "@/app/components/pos/BottomNav";
+import { PAYMENT_LABELS, STATUS_STYLES } from "@/lib/constants";
 import { api } from "@/trpc/react";
 import { ArrowLeft, Receipt } from "lucide-react";
 import Link from "next/link";
 
-const STATUS_STYLES: Record<string, string> = {
-  PAID: "bg-green-100 text-green-700",
-  VOIDED: "bg-red-100 text-red-600",
-  PENDING: "bg-amber-100 text-amber-700",
-  REFUNDED: "bg-gray-100 text-gray-600",
-};
-
-const PAYMENT_LABELS: Record<string, string> = {
-  CASH: "💵 Cash",
-  GCASH: "📱 GCash",
-  CARD: "💳 Card",
-};
-
 export function HistoryScreen() {
-  const { data: transactions = [], isLoading } = api.order.list.useQuery({});
+  const { data: transactions = [], isLoading } = api.order.list.useQuery(
+    {},
+    {
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+    },
+  );
 
   return (
     <div className="flex min-h-screen flex-col bg-amber-50">
