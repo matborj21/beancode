@@ -188,7 +188,7 @@ export function UserFormModal({ open, onClose, onSuccess, user }: Props) {
           <div>
             <label className="mb-1 block text-xs font-medium text-amber-700">
               Email{" "}
-              <span className="font-normal text-amber-400">(optional)</span>
+              <span className="font-normal text-amber-600">(optional)</span>
             </label>
             <Input
               type="email"
@@ -211,7 +211,7 @@ export function UserFormModal({ open, onClose, onSuccess, user }: Props) {
             <label className="mb-1 block text-xs font-medium text-amber-700">
               Password{" "}
               {isEdit && (
-                <span className="font-normal text-amber-400">
+                <span className="font-normal text-amber-600">
                   (leave blank to keep current)
                 </span>
               )}
@@ -231,7 +231,7 @@ export function UserFormModal({ open, onClose, onSuccess, user }: Props) {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400 hover:text-amber-700"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-600 hover:text-amber-700"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>

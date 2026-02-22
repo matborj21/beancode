@@ -10,9 +10,20 @@ import { useCart } from "@/context/CartContext";
 import { api } from "@/trpc/react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ReceiptModal } from "@/app/components/pos/ReceiptModal";
 
 const PAYMENT_METHODS = ["CASH", "GCASH", "CARD"] as const;
 type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+
+export type ReceiptData = {
+  orderNumber: string;
+  items: { name: string; quantity: number; price: number }[];
+  subTotal: number;
+  vat: number;
+  total: number;
+  paymentMethod: string;
+  createdAt: Date;
+};
 
 export function CheckoutScreen() {
   const router = useRouter();
@@ -26,15 +37,29 @@ export function CheckoutScreen() {
     total,
   } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("CASH");
+  const [receiptData, setReceiptData] = useState<ReceiptData | null>(null);
+  const [receiptOpen, setReceiptOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-
-  console.log("Cart Items:", cartItems);
+  const [cashTendered, setCashTendered] = useState("");
 
   const createOrder = api.order.create.useMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // Build receipt data before clearing cart
+      setReceiptData({
+        orderNumber: data.orderNumber,
+        items: cartItems.map((i) => ({
+          name: i.name,
+          quantity: i.quantity,
+          price: i.price,
+        })),
+        subTotal,
+        vat,
+        total,
+        paymentMethod,
+        createdAt: new Date(),
+      });
       clearCart();
-      toast.success("Transaction processed successfully!");
-      router.push("/mobile");
+      setReceiptOpen(true);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -82,6 +107,26 @@ export function CheckoutScreen() {
       },
     });
   }
+
+  function handleReceiptClose() {
+    setReceiptOpen(false);
+    router.push("/mobile");
+  }
+
+  function handlePaymentMethodChange(method: PaymentMethod) {
+    setPaymentMethod(method);
+    setCashTendered("");
+  }
+
+  // Computed change
+  const change = cashTendered
+    ? Math.max(0, Number(cashTendered) - total)
+    : null;
+
+  const isInsufficientCash =
+    paymentMethod === "CASH" &&
+    cashTendered !== "" &&
+    Number(cashTendered) < total;
 
   if (cartItems.length === 0) {
     return (
@@ -135,7 +180,7 @@ export function CheckoutScreen() {
             {PAYMENT_METHODS.map((method) => (
               <button
                 key={method}
-                onClick={() => setPaymentMethod(method)}
+                onClick={() => handlePaymentMethodChange(method)}
                 className={`flex-1 rounded-xl py-3 text-sm font-semibold transition-colors ${
                   paymentMethod === method
                     ? "bg-amber-900 text-amber-50"
@@ -146,6 +191,77 @@ export function CheckoutScreen() {
               </button>
             ))}
           </div>
+
+          {/* Cash Calculator — only show for CASH */}
+          {paymentMethod === "CASH" && (
+            <div className="mt-4 space-y-3">
+              {/* Cash Tendered Input */}
+              <div>
+                <label className="mb-1 block text-xs font-medium text-amber-700">
+                  Cash Tendered (₱)
+                </label>
+                <input
+                  type="number"
+                  value={cashTendered}
+                  onChange={(e) => setCashTendered(e.target.value)}
+                  placeholder="Enter amount received"
+                  min={0}
+                  className={`w-full rounded-xl border px-4 py-3 text-lg font-bold outline-none transition-colors ${
+                    isInsufficientCash
+                      ? "border-red-400 bg-red-50 text-red-600 focus:ring-2 focus:ring-red-300"
+                      : "border-amber-200 bg-amber-50 text-amber-900 focus:ring-2 focus:ring-amber-400"
+                  }`}
+                />
+                {isInsufficientCash && (
+                  <p className="mt-1 text-xs text-red-500">
+                    Insufficient cash. Need ₱
+                    {(total - Number(cashTendered)).toFixed(2)} more.
+                  </p>
+                )}
+              </div>
+
+              {/* Quick Cash Buttons */}
+              <div>
+                <p className="mb-2 text-xs text-amber-400">Quick amounts:</p>
+                <div className="grid grid-cols-4 gap-2">
+                  {[20, 50, 100, 200, 500, 1000].map((amount) => (
+                    <button
+                      key={amount}
+                      onClick={() => setCashTendered(String(amount))}
+                      className={`rounded-xl py-2 text-sm font-semibold transition-colors ${
+                        Number(cashTendered) === amount
+                          ? "bg-amber-900 text-amber-50"
+                          : "bg-amber-100 text-amber-700 hover:bg-amber-200"
+                      }`}
+                    >
+                      ₱{amount}
+                    </button>
+                  ))}
+                  {/* Exact button */}
+                  <button
+                    onClick={() => setCashTendered(total.toFixed(2))}
+                    className={`col-span-2 rounded-xl py-2 text-sm font-semibold transition-colors ${
+                      Number(cashTendered) === Number(total.toFixed(2))
+                        ? "bg-amber-900 text-amber-50"
+                        : "bg-green-100 text-green-700 hover:bg-green-200"
+                    }`}
+                  >
+                    Exact ₱{total.toFixed(2)}
+                  </button>
+                </div>
+              </div>
+
+              {/* Change Display */}
+              {cashTendered && !isInsufficientCash && change !== null && (
+                <div className="rounded-xl bg-green-50 p-3 text-center">
+                  <p className="text-xs text-green-600">Change</p>
+                  <p className="text-3xl font-bold text-green-600">
+                    ₱{change.toFixed(2)}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -153,7 +269,7 @@ export function CheckoutScreen() {
       <div className="fixed bottom-0 left-0 right-0 space-y-2 border-t border-amber-100 bg-white p-4">
         <Button
           onClick={handleProcessTransaction}
-          disabled={isProcessing ?? createOrder.isPending}
+          disabled={createOrder.isPending || isInsufficientCash}
           className="w-full bg-amber-900 py-6 text-base font-bold text-amber-50 hover:bg-amber-800"
         >
           {createOrder.isPending ? "Processing..." : `Pay ₱${total.toFixed(2)}`}
@@ -175,6 +291,21 @@ export function CheckoutScreen() {
           </Button>
         </div>
       </div>
+
+      {/* Receipt Modal */}
+      {receiptData && (
+        <ReceiptModal
+          open={receiptOpen}
+          onClose={handleReceiptClose}
+          orderNumber={receiptData.orderNumber}
+          items={receiptData.items}
+          subtotal={receiptData.subTotal}
+          vat={receiptData.vat}
+          total={receiptData.total}
+          paymentMethod={receiptData.paymentMethod}
+          createdAt={receiptData.createdAt}
+        />
+      )}
     </div>
   );
 }

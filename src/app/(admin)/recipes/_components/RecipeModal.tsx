@@ -107,7 +107,7 @@ export function RecipeModal({ open, onClose, productId, productName }: Props) {
               Current Ingredients
             </p>
             {recipes.length === 0 ? (
-              <p className="rounded-xl bg-amber-50 py-4 text-center text-sm text-amber-400">
+              <p className="rounded-xl bg-amber-50 py-4 text-center text-sm text-amber-600">
                 No ingredients set yet
               </p>
             ) : (

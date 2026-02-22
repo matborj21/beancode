@@ -116,11 +116,17 @@ export const orderRouter = createTRPCRouter({
       z.object({
         from: z.date().optional(),
         to: z.date().optional(),
+        paymentMethod: z.enum(["CASH", "GCASH", "CARD"]).optional(),
+        status: z.enum(["PENDING", "PAID", "VOIDED", "REFUNDED"]).optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
       return ctx.db.transaction.findMany({
         where: {
+          ...(input.paymentMethod
+            ? { paymentMethod: input.paymentMethod }
+            : {}),
+          ...(input.status ? { status: input.status } : {}),
           ...((input.from ?? input.to)
             ? {
                 createdAt: {
