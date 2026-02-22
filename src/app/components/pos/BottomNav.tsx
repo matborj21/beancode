@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { Home, History, ShoppingCart, User } from "lucide-react";
 import { type LucideIcon } from "lucide-react";
-import Link from "next/link";
+import { SignOutButton } from "@/components/pos/SignOutButton";
 
 type NavItem = {
   label: string;
@@ -14,7 +15,6 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Home", icon: Home, href: "/mobile" },
   { label: "History", icon: History, href: "/mobile/history" },
   { label: "Transaction", icon: ShoppingCart, href: "/mobile/checkout" },
-  { label: "Profile", icon: User, href: "/mobile/profile" },
 ];
 
 type Props = {
@@ -40,6 +40,8 @@ export function BottomNav({ active }: Props) {
             </Link>
           );
         })}
+        {/* Sign Out replaces Profile tab */}
+        <SignOutButton variant="icon" />
       </div>
     </nav>
   );

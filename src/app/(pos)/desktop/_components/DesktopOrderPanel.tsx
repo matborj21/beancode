@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
-import { ORDER_NUMBER, type PAYMENT_METHODS } from "@/lib/constants";
+import { ORDER_NUMBER, PAYMENT_METHODS } from "@/lib/constants";
 import { api } from "@/trpc/react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 
@@ -126,6 +126,74 @@ export function DesktopOrderPanel() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Order Summary + Actions */}
+      <div className="space-y-3 border-t border-amber-100 p-4">
+        {/* Totals */}
+        <div className="space-y-1 text-sm">
+          <div className="flex justify-between text-amber-600">
+            <span>Subtotal</span>
+            <span>₱{subTotal.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between text-amber-600">
+            <span>VAT (12%)</span>
+            <span>₱{vat.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between text-lg font-bold text-amber-900">
+            <span>Total</span>
+            <span>₱{total.toFixed(2)}</span>
+          </div>
+        </div>
+
+        {/* Payment Method */}
+        <div className="flex gap-2">
+          {PAYMENT_METHODS.map((method) => (
+            <button
+              key={method}
+              onClick={() => setPaymentMethod(method)}
+              className={`flex-1 rounded-xl py-2 text-xs font-semibold transition-colors ${
+                paymentMethod === method
+                  ? "bg-amber-900 text-amber-50"
+                  : "bg-amber-100 text-amber-900 hover:bg-amber-200"
+              }`}
+            >
+              {method}
+            </button>
+          ))}
+        </div>
+
+        {/* Process Button */}
+        <Button
+          onClick={() =>
+            createOrder.mutate({
+              items: cartItems.map((i) => ({
+                productId: i.productId,
+                quantity: i.quantity,
+                price: i.price,
+              })),
+              paymentMethod,
+            })
+          }
+          disabled={cartItems.length === 0 || createOrder.isPending}
+          className="w-full bg-amber-900 py-6 text-base font-bold text-amber-50 hover:bg-amber-800"
+        >
+          {createOrder.isPending
+            ? "Processing..."
+            : `Process Order ₱${total.toFixed(2)}`}
+        </Button>
+
+        {/* Void */}
+        <Button
+          variant="outline"
+          onClick={() => {
+            if (confirm("Void this transaction?")) clearCart();
+          }}
+          disabled={cartItems.length === 0 || createOrder.isPending}
+          className="w-full border-red-200 text-red-500 hover:bg-red-50"
+        >
+          Void Transaction
+        </Button>
       </div>
     </div>
   );

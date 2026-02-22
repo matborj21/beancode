@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import {
   PrismaClient,
   PaymentMethod,
@@ -148,6 +149,46 @@ async function main() {
       },
     });
   }
+
+  const hashedPassword = await bcrypt.hash("admin123", 12);
+
+  await prisma.user.upsert({
+    where: { username: "admin" },
+    update: {},
+    create: {
+      username: "admin",
+      email: "admin@beancode.com",
+      name: "Admin User",
+      password: hashedPassword,
+      role: "ADMIN",
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { username: "cashier1" },
+    update: {},
+    create: {
+      username: "cashier1",
+      email: "cashier1@beancode.com",
+      name: "Cashier One",
+      password: await bcrypt.hash("cashier123", 12),
+      role: "CASHIER",
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { username: "barista1" },
+    update: {},
+    create: {
+      username: "barista1",
+      email: "barista1@beancode.com",
+      name: "Barista One",
+      password: await bcrypt.hash("barista123", 12),
+      role: "BARISTA",
+    },
+  });
+
+  console.log("✅ Users seeded");
 
   console.log("✅ Products + Inventory created");
   console.log("🎉 Seeding complete!");

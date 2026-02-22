@@ -17,7 +17,6 @@ export function CheckoutScreen() {
   const router = useRouter();
   const {
     cartItems,
-    addItem,
     updateItemQuantity,
     removeItem,
     clearCart,

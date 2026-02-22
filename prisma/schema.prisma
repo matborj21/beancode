@@ -46,13 +46,15 @@ model Session {
 model User {
     id            String    @id @default(cuid())
     name          String?
+    username      String?   @unique
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    password      String?
+    role          Role      @default(CASHIER)
     accounts      Account[]
     sessions      Session[]
 }
-
 model VerificationToken {
     identifier String
     token      String   @unique
@@ -123,3 +125,10 @@ enum TransactionStatus {
   VOIDED
   REFUNDED
 }
+
+enum Role {
+  CASHIER
+  BARISTA
+  ADMIN
+}
+
