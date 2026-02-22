@@ -16,6 +16,9 @@ export function DesktopPOSScreen() {
     category: selectedCategory,
   });
 
+  const { data: lowStockProductIds = [] } =
+    api.product.getLowStockProductIds.useQuery();
+
   function handleAddToCart(productId: string) {
     const product = products.find((p) => p.id === productId);
     if (!product) return;
@@ -86,6 +89,7 @@ export function DesktopPOSScreen() {
                 price={Number(product.price)}
                 imageUrl={product.imageUrl ?? null}
                 onAdd={handleAddToCart}
+                isLowStock={lowStockProductIds.includes(product.id)}
               />
             ))}
           </div>

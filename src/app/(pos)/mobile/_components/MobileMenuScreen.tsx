@@ -20,6 +20,9 @@ export function MobileMenuScreen() {
     search,
   });
 
+  const { data: lowStockProductIds = [] } =
+    api.product.getLowStockProductIds.useQuery();
+
   function handleAddToCart(productId: string) {
     const product = products.find((p) => p.id === productId);
     if (product) {
@@ -91,6 +94,7 @@ export function MobileMenuScreen() {
                 price={Number(product.price)}
                 imageUrl={product.imageUrl ?? null}
                 onAdd={handleAddToCart}
+                isLowStock={lowStockProductIds.includes(product.id)}
               />
             ))}
           </div>

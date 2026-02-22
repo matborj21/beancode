@@ -1,5 +1,6 @@
 "use client";
 
+import { AlertTriangle } from "lucide-react";
 import Image from "next/image";
 
 type ProductCardProps = {
@@ -8,6 +9,7 @@ type ProductCardProps = {
   price: number;
   imageUrl: string | null;
   onAdd: (productId: string) => void;
+  isLowStock?: boolean;
 };
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -16,6 +18,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   price,
   imageUrl,
   onAdd,
+  isLowStock,
 }) => {
   return (
     <button
@@ -34,6 +37,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         ) : (
           <div className="flex h-full items-center justify-center text-4xl">
             ☕
+          </div>
+        )}
+
+        {/* Low Stock Badge */}
+        {isLowStock && (
+          <div className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-amber-500 px-2 py-0.5 text-xs font-semibold text-white shadow">
+            <AlertTriangle size={10} />
+            Low Supply
           </div>
         )}
       </div>

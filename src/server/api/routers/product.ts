@@ -104,4 +104,25 @@ export const productRouter = createTRPCRouter({
         data: { isActive: false },
       });
     }),
+
+  getLowStockProductIds: publicProcedure.query(async ({ ctx }) => {
+    // Get all supplies that are low
+    const allSupplies = await ctx.db.supply.findMany({
+      select: { id: true, stock: true, minStock: true },
+    });
+
+    const lowSupplyIds = allSupplies
+      .filter((s) => s.stock <= s.minStock)
+      .map((s) => s.id);
+
+    if (lowSupplyIds.length === 0) return [];
+
+    // Find products that use those supplies
+    const recipes = await ctx.db.recipe.findMany({
+      where: { supplyId: { in: lowSupplyIds } },
+      select: { productId: true },
+    });
+
+    return [...new Set(recipes.map((r) => r.productId))];
+  }),
 });
